@@ -35,7 +35,7 @@ class ChartServiceTest {
     private static void assertChartItems(Chart chart) {
         // Asserts that chart is not null and has valid meta, timestamps and indicators
         assertNotNull(chart);
-        assertNotNull(chart.getMeta());
+//        assertNotNull(chart.getMeta());
         assertNotNull(chart.getTimestamp());
         assertNotNull(chart.getIndicators());
 
@@ -45,7 +45,7 @@ class ChartServiceTest {
         assertFalse(chart.getIndicators().getAdjclose().isEmpty());
 
         // Asserts that some meta elements values are what we expect
-        assertEquals("AAPL", chart.getMeta().getSymbol());
-        assertEquals("America/New_York", chart.getMeta().getExchangeTimezoneName());
+        assertEquals("AAPL", chart.getSymbol());
+        assertEquals("America/New_York", chart.getExchangeTimezoneName());
     }
 }

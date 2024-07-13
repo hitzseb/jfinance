@@ -2,7 +2,6 @@ package org.jfinance;
 
 import org.jfinance.mapper.ChartMapper;
 import org.jfinance.model.Chart;
-import org.jfinance.model.Meta;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -18,13 +17,11 @@ class ChartMapperTest {
         try {
             Chart chart = ChartMapper.buildChartfromJson(jsonStr);
             assertNotNull(chart);
-            Meta meta = chart.getMeta();
-            assertNotNull(meta);
 
-            // Assert meta fields
-            assertEquals("AAPL", meta.getSymbol());
-            assertEquals("USD", meta.getCurrency());
-            assertEquals("America/New_York", meta.getExchangeTimezoneName());
+            // Assert fields
+            assertEquals("AAPL", chart.getSymbol());
+            assertEquals("USD", chart.getCurrency());
+            assertEquals("America/New_York", chart.getExchangeTimezoneName());
 
             // Assert timestamp
             List<Long> timestamps = chart.getTimestamp();
@@ -44,8 +41,6 @@ class ChartMapperTest {
             assertEquals(2, chart.getIndicators().getQuote().get(0).getHigh().size());
             assertEquals(210.0, chart.getIndicators().getQuote().get(0).getHigh().get(0));
             assertEquals(211.0, chart.getIndicators().getQuote().get(0).getHigh().get(1));
-
-            // Add more assertions for other fields as needed
 
         } catch (IOException e) {
             fail("Exception should not be thrown");

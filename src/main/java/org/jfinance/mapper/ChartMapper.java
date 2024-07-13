@@ -12,7 +12,6 @@ import java.util.List;
  * Mapper class for converting JSON strings into Chart objects.
  */
 public class ChartMapper {
-
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
@@ -26,25 +25,27 @@ public class ChartMapper {
         JsonNode rootNode = objectMapper.readTree(jsonStr);
         JsonNode resultNode = rootNode.at("/chart/result/0");
 
-        Meta meta = mapMeta(resultNode.at("/meta"));
+        Chart chart = mapMeta(resultNode.at("/meta"));
         List<Long> timestampList = mapTimestampList(resultNode.at("/timestamp"));
         Indicators indicators = mapIndicators(resultNode.at("/indicators"));
+        chart.setTimestamp(timestampList);
+        chart.setIndicators(indicators);
 
-        return new Chart(meta, timestampList, indicators);
+        return chart;
     }
 
     /**
      * Maps the JSON node to a Meta object.
      *
-     * @param metaNode the JSON node representing the meta data
-     * @return a Meta object
+     * @param metaNode the JSON node representing the metadata
+     * @return a Chart object
      */
-    private static Meta mapMeta(JsonNode metaNode) {
-        Meta meta = new Meta();
-        meta.setSymbol(metaNode.get("symbol").asText());
-        meta.setCurrency(metaNode.get("currency").asText());
-        meta.setExchangeTimezoneName(metaNode.get("exchangeTimezoneName").asText());
-        return meta;
+    private static Chart mapMeta(JsonNode metaNode) {
+        Chart chart = new Chart();
+        chart.setSymbol(metaNode.get("symbol").asText());
+        chart.setCurrency(metaNode.get("currency").asText());
+        chart.setExchangeTimezoneName(metaNode.get("exchangeTimezoneName").asText());
+        return chart;
     }
 
     /**

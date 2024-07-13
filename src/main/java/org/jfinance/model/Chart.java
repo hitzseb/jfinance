@@ -3,35 +3,62 @@ package org.jfinance.model;
 import java.util.List;
 
 public class Chart {
-    private Meta meta;
+    private String symbol;
+    private String currency;
+    private String exchangeTimezoneName;
+//    private Meta meta;
     private List<Long> timestamp;
     private Indicators indicators;
 
     public Chart() {
     }
 
-    public Chart(Meta meta, List<Long> timestamp, Indicators indicators) {
-        this.meta = meta;
-        this.timestamp = timestamp;
-        this.indicators = indicators;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public Meta getMeta() {
-        return meta;
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getExchangeTimezoneName() {
+        return exchangeTimezoneName;
+    }
+
+    public void setExchangeTimezoneName(String exchangeTimezoneName) {
+        this.exchangeTimezoneName = exchangeTimezoneName;
     }
 
     public List<Long> getTimestamp() {
         return timestamp;
     }
 
+    public void setTimestamp(List<Long> timestamp) {
+        this.timestamp = timestamp;
+    }
+
     public Indicators getIndicators() {
         return indicators;
+    }
+
+    public void setIndicators(Indicators indicators) {
+        this.indicators = indicators;
     }
 
     @Override
     public String toString() {
         return "Chart{" +
-                "meta=" + meta +
+                "symbol='" + symbol + '\'' +
+                ", currency='" + currency + '\'' +
+                ", exchangeTimezoneName='" + exchangeTimezoneName + '\'' +
                 ", timestamp=" + timestamp +
                 ", indicators=" + indicators +
                 '}';
