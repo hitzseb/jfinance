@@ -19,11 +19,5 @@ class StockServiceTest {
         assertNotNull(stock);
         assertNotNull(stock.getName());
         assertNotNull(stock.getExchange());
-        assertNotNull(stock.getFinancialData());
-        assertNotNull(stock.getFinancialData().getRegularMarketPrice());
-        assertNotNull(stock.getFinancialData().getTrailingPE());
-        assertNotNull(stock.getFinancialData().getEpsTrailingTwelveMonths());
-        assertNotNull(stock.getFinancialData().getMarketCap());
-        assertNotNull(stock.getFinancialData().getBookValue());
     }
 }

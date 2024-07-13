@@ -1,6 +1,5 @@
 package org.jfinance.service;
 
-import org.jfinance.model.FinancialData;
 import org.jfinance.model.Stock;
 
 import java.io.IOException;

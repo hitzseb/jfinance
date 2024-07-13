@@ -2,7 +2,6 @@ package org.jfinance.mapper;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jfinance.model.FinancialData;
 import org.jfinance.model.Stock;
 
 import java.io.IOException;
@@ -26,12 +25,7 @@ public class StockMapper {
         JsonNode optionsNode = getOptionsNode(optionsJsonStr);
         JsonNode searchNode = getSearchNode(searchJsonStr);
 
-        Stock stock = mapStock(optionsNode, searchNode);
-        FinancialData financialData = mapFinancialData(optionsNode);
-
-        stock.setFinancialData(financialData);
-
-        return stock;
+        return mapStock(optionsNode, searchNode);
     }
 
     /**
@@ -73,34 +67,22 @@ public class StockMapper {
         stock.setSector(searchNode.get("sector").asText());
         stock.setIndustry(searchNode.get("industry").asText());
         stock.setExchange(searchNode.get("exchDisp").asText());
+        stock.setRegularMarketPrice(optionsNode.get("regularMarketPrice").asDouble());
+        stock.setRegularMarketChangePercent(optionsNode.get("regularMarketChangePercent").asDouble());
+        stock.setMarketCap(optionsNode.get("marketCap").asLong());
+        stock.setBookValue(optionsNode.get("bookValue").asDouble());
+        stock.setPriceToBook(optionsNode.get("priceToBook").asDouble());
+        stock.setTrailingPE(optionsNode.get("trailingPE").asDouble());
+        stock.setForwardPE(optionsNode.get("forwardPE").asDouble());
+        stock.setEpsTrailingTwelveMonths(optionsNode.get("epsTrailingTwelveMonths").asDouble());
+        stock.setEpsCurrentYear(optionsNode.get("epsCurrentYear").asDouble());
+        stock.setEpsForward(optionsNode.get("epsForward").asDouble());
+        stock.setPriceEpsCurrentYear(optionsNode.get("priceEpsCurrentYear").asDouble());
+        stock.setDividendDate(optionsNode.get("dividendDate").asLong());
+        stock.setTrailingAnnualDividendRate(optionsNode.get("trailingAnnualDividendRate").asDouble());
+        stock.setTrailingAnnualDividendYield(optionsNode.get("trailingAnnualDividendYield").asDouble());
+        stock.setEarningsTimestamp(optionsNode.get("earningsTimestamp").asLong());
+        stock.setSharesOutstanding(optionsNode.get("sharesOutstanding").asLong());
         return stock;
     }
-
-    /**
-     * Maps the JSON node to a FinancialData object.
-     *
-     * @param optionsNode the JSON node representing the options data
-     * @return a FinancialData object
-     */
-    private static FinancialData mapFinancialData(JsonNode optionsNode) {
-        FinancialData financialData = new FinancialData();
-        financialData.setRegularMarketPrice(optionsNode.get("regularMarketPrice").asDouble());
-        financialData.setRegularMarketChangePercent(optionsNode.get("regularMarketChangePercent").asDouble());
-        financialData.setMarketCap(optionsNode.get("marketCap").asLong());
-        financialData.setBookValue(optionsNode.get("bookValue").asDouble());
-        financialData.setPriceToBook(optionsNode.get("priceToBook").asDouble());
-        financialData.setTrailingPE(optionsNode.get("trailingPE").asDouble());
-        financialData.setForwardPE(optionsNode.get("forwardPE").asDouble());
-        financialData.setEpsTrailingTwelveMonths(optionsNode.get("epsTrailingTwelveMonths").asDouble());
-        financialData.setEpsCurrentYear(optionsNode.get("epsCurrentYear").asDouble());
-        financialData.setEpsForward(optionsNode.get("epsForward").asDouble());
-        financialData.setPriceEpsCurrentYear(optionsNode.get("priceEpsCurrentYear").asDouble());
-        financialData.setDividendDate(optionsNode.get("dividendDate").asLong());
-        financialData.setTrailingAnnualDividendRate(optionsNode.get("trailingAnnualDividendRate").asDouble());
-        financialData.setTrailingAnnualDividendYield(optionsNode.get("trailingAnnualDividendYield").asDouble());
-        financialData.setEarningsTimestamp(optionsNode.get("earningsTimestamp").asLong());
-        financialData.setSharesOutstanding(optionsNode.get("sharesOutstanding").asLong());
-        return financialData;
-    }
-
 }

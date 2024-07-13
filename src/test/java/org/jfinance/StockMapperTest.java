@@ -1,7 +1,6 @@
 package org.jfinance;
 
 import org.jfinance.mapper.StockMapper;
-import org.jfinance.model.FinancialData;
 import org.jfinance.model.Stock;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +17,6 @@ class StockMapperTest {
         try {
             Stock stock = StockMapper.buildStockFromJson(optionsJsonStr, searchJsonStr);
             assertNotNull(stock);
-            FinancialData financialData = stock.getFinancialData();
-            assertNotNull(financialData);
 
             // Assert stock fields
             assertEquals("AAPL", stock.getSymbol());
@@ -28,24 +25,22 @@ class StockMapperTest {
             assertEquals("Technology", stock.getSector());
             assertEquals("Consumer Electronics", stock.getIndustry());
             assertEquals("NASDAQ", stock.getExchange());
-
-//             Assert financial data fields
-            assertEquals(221.55, financialData.getRegularMarketPrice());
-            assertEquals(0.0706917, financialData.getRegularMarketChangePercent());
-            assertEquals(3397269848064L, financialData.getMarketCap());
-            assertEquals(4.837, financialData.getBookValue());
-            assertEquals(46.79347, financialData.getPriceToBook());
-            assertEquals(34.455677, financialData.getTrailingPE());
-            assertEquals(30.349316, financialData.getForwardPE());
-            assertEquals(7.3, financialData.getEpsTrailingTwelveMonths());
-            assertEquals(6.6, financialData.getEpsCurrentYear());
-            assertEquals(7.3, financialData.getEpsForward());
-            assertEquals(34.293938, financialData.getPriceEpsCurrentYear());
-            assertEquals(1715817600, financialData.getDividendDate());
-            assertEquals(6.43, financialData.getTrailingAnnualDividendRate());
-            assertEquals(0.0043582874, financialData.getTrailingAnnualDividendYield());
-            assertEquals(1714681800, financialData.getEarningsTimestamp());
-            assertEquals(15334099968L, financialData.getSharesOutstanding());
+            assertEquals(221.55, stock.getRegularMarketPrice());
+            assertEquals(0.0706917, stock.getRegularMarketChangePercent());
+            assertEquals(3397269848064L, stock.getMarketCap());
+            assertEquals(4.837, stock.getBookValue());
+            assertEquals(46.79347, stock.getPriceToBook());
+            assertEquals(34.455677, stock.getTrailingPE());
+            assertEquals(30.349316, stock.getForwardPE());
+            assertEquals(7.3, stock.getEpsTrailingTwelveMonths());
+            assertEquals(6.6, stock.getEpsCurrentYear());
+            assertEquals(7.3, stock.getEpsForward());
+            assertEquals(34.293938, stock.getPriceEpsCurrentYear());
+            assertEquals(1715817600, stock.getDividendDate());
+            assertEquals(6.43, stock.getTrailingAnnualDividendRate());
+            assertEquals(0.0043582874, stock.getTrailingAnnualDividendYield());
+            assertEquals(1714681800, stock.getEarningsTimestamp());
+            assertEquals(15334099968L, stock.getSharesOutstanding());
 
         } catch (IOException e) {
             fail("Exception should not be thrown");
