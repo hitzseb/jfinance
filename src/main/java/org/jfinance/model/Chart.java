@@ -6,7 +6,6 @@ public class Chart {
     private String symbol;
     private String currency;
     private String exchangeTimezoneName;
-//    private Meta meta;
     private List<Long> timestamp;
     private Indicators indicators;
 
