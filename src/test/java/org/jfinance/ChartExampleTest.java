@@ -11,13 +11,13 @@ public class ChartExampleTest {
         Chart periodChart = ChartService.getChart("AAPL", "1d", "2024-03-01", "2024-04-01");
 
         System.out.println("\n" + rangeChart.toString() + "\n");
-        System.out.println("NY timezone" + "\n");
+        System.out.println("New York timezone" + "\n");
         rangeChart.printTable();
 
         System.out.println("\n--------------------------------------------------------------------------------------");
 
         System.out.println("\n" + periodChart.toString() + "\n");
-        System.out.println("BS timezone" + "\n");
+        System.out.println("Buenos Aires timezone" + "\n");
         periodChart.printTable("America/Argentina/Buenos_Aires");
     }
 }
