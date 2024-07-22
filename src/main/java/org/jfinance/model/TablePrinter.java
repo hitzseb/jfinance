@@ -23,15 +23,17 @@ public class TablePrinter {
      */
     public static void printTable(List<Long> timestamps, List<Double> opens, List<Double> highs, List<Double> lows,
                                   List<Double> closes, List<Double> adjCloses, List<Long> volumes, String timeZone) {
-        // Print the table heading
-        System.out.printf("%-20s %-10s %-10s %-10s %-10s %-10s %-10s\n", "Date", "Open", "High", "Low", "Close", "Adj Close", "Volume");
-        System.out.println("--------------------------------------------------------------------------------------");
+        StringBuilder sb = new StringBuilder();
 
-        // Print the table rows
+        sb.append(String.format("%-20s %-10s %-10s %-10s %-10s %-10s %-10s\n", "Date", "Open", "High", "Low", "Close", "Adj Close", "Volume"));
+        sb.append("--------------------------------------------------------------------------------------\n");
+
         for (int i = 0; i < timestamps.size(); i++) {
             String dateStr = TimestampConverter.convertTimestampToDate(timestamps.get(i), timeZone);
-            System.out.printf("%-20s %-10.2f %-10.2f %-10.2f %-10.2f %-10.2f %-10d\n",
-                    dateStr, opens.get(i), highs.get(i), lows.get(i), closes.get(i), adjCloses.get(i), volumes.get(i));
+            sb.append(String.format("%-20s %-10.2f %-10.2f %-10.2f %-10.2f %-10.2f %-10d\n",
+                    dateStr, opens.get(i), highs.get(i), lows.get(i), closes.get(i), adjCloses.get(i), volumes.get(i)));
         }
+
+        System.out.print(sb.toString());
     }
 }
