@@ -64,11 +64,42 @@ public class RequestSender {
      * @throws InterruptedException if the operation is interrupted
      */
     public static Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest) throws IOException, InterruptedException {
-        HttpResponse<String> optionsResponse = sendRequest(optionsRequest);
-        HttpResponse<String> searchResponse = sendRequest(searchRequest);
+        final HttpResponse<String>[] optionsResponse = new HttpResponse[1];
+        final HttpResponse<String>[] searchResponse = new HttpResponse[1];
 
-        if (optionsResponse != null && searchResponse != null) {
-            return StockMapper.buildStockFromJson(optionsResponse.body(), searchResponse.body());
+        // Creating threads to handle requests simultaneously
+        Thread optionsThread = new Thread(() -> {
+            try {
+                optionsResponse[0] = sendRequest(optionsRequest);
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Thread searchThread = new Thread(() -> {
+            try {
+                searchResponse[0] = sendRequest(searchRequest);
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        // Starting threads
+        optionsThread.start();
+        searchThread.start();
+
+        // Wait for all threads to finish
+        try {
+            optionsThread.join();
+            searchThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            throw new InterruptedException("Thread execution interrupted");
+        }
+
+        // Process the results
+        if (optionsResponse[0] != null && searchResponse[0] != null) {
+            return StockMapper.buildStockFromJson(optionsResponse[0].body(), searchResponse[0].body());
         }
         return null;
     }
