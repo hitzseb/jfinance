@@ -6,6 +6,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for converting timestamps to dates and vice versa.
@@ -30,6 +32,19 @@ public class TimestampConverter {
         ZonedDateTime zonedDateTime = instant.atZone(zoneId);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return zonedDateTime.format(formatter);
+    }
+
+    /**
+     * Converts a list of timestamps to a list of formatted date strings based on the specified timezone.
+     *
+     * @param timestamps the list of timestamps to convert
+     * @param timeZone the timezone identifier (e.g., "America/New_York")
+     * @return the list of formatted date strings
+     */
+    public static List<String> convertTimestampsToDates(List<Long> timestamps, String timeZone) {
+        return timestamps.stream()
+                .map(timestamp -> convertTimestampToDate(timestamp, timeZone))
+                .collect(Collectors.toList());
     }
 
     /**

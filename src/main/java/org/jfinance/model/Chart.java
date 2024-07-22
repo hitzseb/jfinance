@@ -65,7 +65,7 @@ public class Chart {
 
     public void printTable() {
         if (timestamp == null || timestamp.isEmpty() || indicators == null || indicators.getQuote() == null || indicators.getQuote().isEmpty()) {
-            System.out.println("No hay datos disponibles para mostrar.");
+            System.out.println("Chart has no data to show.");
             return;
         }
 
