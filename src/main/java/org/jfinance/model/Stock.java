@@ -7,6 +7,7 @@ public class Stock {
     private String sector;
     private String industry;
     private String exchange;
+    private String currency;
     private double regularMarketPrice;
     private double regularMarketChangePercent;
     private long marketCap;
@@ -73,6 +74,14 @@ public class Stock {
 
     public void setExchange(String exchange) {
         this.exchange = exchange;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public double getRegularMarketPrice() {
@@ -212,6 +221,7 @@ public class Stock {
                 ", sector='" + sector + '\'' +
                 ", industry='" + industry + '\'' +
                 ", exchange='" + exchange + '\'' +
+                ", currency='" + currency + '\'' +
                 ", regularMarketPrice=" + regularMarketPrice +
                 ", regularMarketChangePercent=" + regularMarketChangePercent +
                 ", marketCap=" + marketCap +
