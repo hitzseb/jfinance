@@ -67,6 +67,7 @@ public class StockMapper {
         stock.setSector(searchNode.get("sector").asText());
         stock.setIndustry(searchNode.get("industry").asText());
         stock.setExchange(searchNode.get("exchDisp").asText());
+        stock.setCurrency(optionsNode.get("currency").asText());
         stock.setRegularMarketPrice(optionsNode.get("regularMarketPrice").asDouble());
         stock.setRegularMarketChangePercent(optionsNode.get("regularMarketChangePercent").asDouble());
         stock.setMarketCap(optionsNode.get("marketCap").asLong());
