@@ -3,6 +3,7 @@ package org.jfinance.model;
 import java.util.List;
 
 public class Quote {
+
     private List<Double> low;
     private List<Long> volume;
     private List<Double> open;
@@ -62,4 +63,5 @@ public class Quote {
                 ", close=" + close +
                 '}';
     }
+
 }

@@ -1,6 +1,7 @@
 package org.jfinance.model;
 
 public class Stock {
+
     private String symbol;
     private String name;
     private String type;
@@ -19,10 +20,10 @@ public class Stock {
     private double epsCurrentYear;
     private double epsForward;
     private double priceEpsCurrentYear;
-    private long dividendDate;
+    private String dividendDate;
     private double trailingAnnualDividendRate;
     private double trailingAnnualDividendYield;
-    private long earningsTimestamp;
+    private String earningsTimestamp;
     private long sharesOutstanding;
 
     public Stock() {
@@ -172,11 +173,11 @@ public class Stock {
         this.priceEpsCurrentYear = priceEpsCurrentYear;
     }
 
-    public long getDividendDate() {
+    public String getDividendDate() {
         return dividendDate;
     }
 
-    public void setDividendDate(long dividendDate) {
+    public void setDividendDate(String dividendDate) {
         this.dividendDate = dividendDate;
     }
 
@@ -196,11 +197,11 @@ public class Stock {
         this.trailingAnnualDividendYield = trailingAnnualDividendYield;
     }
 
-    public long getEarningsTimestamp() {
+    public String getEarningsTimestamp() {
         return earningsTimestamp;
     }
 
-    public void setEarningsTimestamp(long earningsTimestamp) {
+    public void setEarningsTimestamp(String earningsTimestamp) {
         this.earningsTimestamp = earningsTimestamp;
     }
 
@@ -240,4 +241,5 @@ public class Stock {
                 ", sharesOutstanding=" + sharesOutstanding +
                 '}';
     }
+
 }

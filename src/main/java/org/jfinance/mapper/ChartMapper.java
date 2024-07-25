@@ -3,6 +3,7 @@ package org.jfinance.mapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jfinance.model.*;
+import org.jfinance.service.TimestampConverter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +13,9 @@ import java.util.List;
  * Mapper class for converting JSON strings into Chart objects.
  */
 public class ChartMapper {
+
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final TimestampConverter tsConverter = TimestampConverter.getInstance();
 
     /**
      * Builds a Chart object from a JSON string.
@@ -28,7 +31,7 @@ public class ChartMapper {
         Chart chart = mapMeta(resultNode.at("/meta"));
         List<Long> timestampList = mapTimestampList(resultNode.at("/timestamp"));
         Indicators indicators = mapIndicators(resultNode.at("/indicators"));
-        chart.setTimestamp(timestampList);
+        chart.setTimestamp(tsConverter.convertTimestampsToDates(timestampList));
         chart.setIndicators(indicators);
 
         return chart;

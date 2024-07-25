@@ -1,11 +1,11 @@
 ## Yahoo Finance API
 
-This is a Java library that provides a simple interface for interacting with Yahoo Finance API, and retrieving stock data and price charts.
+A Java library that provides a simple interface to interact with the Yahoo Finance API and retrieve stock data.
 
 #### Usage examples
 Retrieve detailed information about a stock:
 ```
-Stock stock = StockService.getStock("AAPL");
+Stock stock = YahooFinanceAPI.getStock("AAPL");
 System.out.println(stock.toString());
 ```
 Example output:
@@ -16,14 +16,14 @@ Retrieve historical price data for a stock. The expected arguments are:
 `symbol, period1, period2` or `symbol, interval, range`.
 
 Valid Intervals:
-- "1m", "2m", "5m", "15m", "30m", "60m", "90m", "1h", "1d", "5d", "1wk", "1mo", "3mo"
+- "1d", "5d", "1wk", "1mo", "3mo"
 
 Valid Ranges:
 - "1d", "5d", "1mo", "3mo", "6mo", "1y", "2y", "5y", "10y", "ytd", "max"
 
 ```
-Chart chart = ChartService.getChart("AAPL", "1d", "5d");
-chart.printTable();
+Chart chart = YahooFinanceAPI.getChart("AAPL", "1d", "5d");
+System.out.println(stock.buildTable();
 ```
 Example output:
 ```
@@ -36,19 +36,13 @@ Date                 Open       High       Low        Close      Adj Close  Volu
 2024-07-22           227,27     227,78     223,09     223,96     223,96     45939219 
 ```
 
-#### Utilities
-Convert timestamps to formatted date strings:
+#### Required libraries
+- Jackson Databind
 ```
-// One by one
-String date = TimestampConverter.convertTimestampToDate(1236657600L, "America/New_York");
-System.out.println(date);
-// or as list
-List<Long> timestamps = Arrays.asList(1236657600L, 1236744000L);
-List<String> dates = TimestampConverter.convertTimestampsToDates(timestamps, "America/New_York");
-System.out.println(dates);
-```
-Example output:
-```
-2009-03-10
-[2009-03-10, 2009-03-11]
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.17.1</version>
+</dependency>
 ```

@@ -3,6 +3,7 @@ package org.jfinance.mapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jfinance.model.Stock;
+import org.jfinance.service.TimestampConverter;
 
 import java.io.IOException;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 public class StockMapper {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final TimestampConverter tsConverter = TimestampConverter.getInstance();
 
     /**
      * Builds a Stock object from two JSON strings representing options and search data.
@@ -79,11 +81,14 @@ public class StockMapper {
         stock.setEpsCurrentYear(optionsNode.get("epsCurrentYear").asDouble());
         stock.setEpsForward(optionsNode.get("epsForward").asDouble());
         stock.setPriceEpsCurrentYear(optionsNode.get("priceEpsCurrentYear").asDouble());
-        stock.setDividendDate(optionsNode.get("dividendDate").asLong());
+        Long dividendDate = optionsNode.get("dividendDate").asLong();
+        stock.setDividendDate(tsConverter.convertTimestampToDate(dividendDate));
         stock.setTrailingAnnualDividendRate(optionsNode.get("trailingAnnualDividendRate").asDouble());
         stock.setTrailingAnnualDividendYield(optionsNode.get("trailingAnnualDividendYield").asDouble());
-        stock.setEarningsTimestamp(optionsNode.get("earningsTimestamp").asLong());
+        Long earningsTimestamp = optionsNode.get("earningsTimestamp").asLong();
+        stock.setEarningsTimestamp(tsConverter.convertTimestampToDate(earningsTimestamp));
         stock.setSharesOutstanding(optionsNode.get("sharesOutstanding").asLong());
         return stock;
     }
+
 }

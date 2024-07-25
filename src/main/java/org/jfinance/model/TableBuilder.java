@@ -1,16 +1,14 @@
 package org.jfinance.model;
 
-import org.jfinance.service.TimestampConverter;
-
 import java.util.List;
 
 /**
  * Utility class for printing a table with chart data.
  */
-public class TablePrinter {
+public class TableBuilder {
 
     /**
-     * Prints a table with chart data including timestamps, opens, highs, lows, closes, adjCloses, and volumes.
+     * Builds a table with chart data including timestamps, opens, highs, lows, closes, adjCloses, and volumes.
      *
      * @param timestamps the list of timestamps to print
      * @param opens the list of opening prices to print
@@ -21,7 +19,7 @@ public class TablePrinter {
      * @param volumes the list of volumes to print
      * @param timeZone the timezone identifier for converting timestamps to dates
      */
-    public static void printTable(List<Long> timestamps, List<Double> opens, List<Double> highs, List<Double> lows,
+    public static String buildTable(List<String> timestamps, List<Double> opens, List<Double> highs, List<Double> lows,
                                   List<Double> closes, List<Double> adjCloses, List<Long> volumes, String timeZone) {
         StringBuilder sb = new StringBuilder();
 
@@ -29,11 +27,11 @@ public class TablePrinter {
         sb.append("--------------------------------------------------------------------------------------\n");
 
         for (int i = 0; i < timestamps.size(); i++) {
-            String dateStr = TimestampConverter.convertTimestampToDate(timestamps.get(i), timeZone);
             sb.append(String.format("%-20s %-10.2f %-10.2f %-10.2f %-10.2f %-10.2f %-10d\n",
-                    dateStr, opens.get(i), highs.get(i), lows.get(i), closes.get(i), adjCloses.get(i), volumes.get(i)));
+                    timestamps.get(i), opens.get(i), highs.get(i), lows.get(i), closes.get(i), adjCloses.get(i), volumes.get(i)));
         }
 
-        System.out.print(sb.toString());
+        return sb.toString();
     }
+
 }

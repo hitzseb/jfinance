@@ -11,6 +11,15 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class RequestSender {
+
+    private static final RequestSender instance = new RequestSender();
+
+    private RequestSender() {}
+
+    public static RequestSender getInstance() {
+        return instance;
+    }
+
     private static final HttpClient client = HttpClient.newHttpClient();
 
     /**
@@ -45,7 +54,7 @@ public class RequestSender {
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public static Chart sendChartRequest(HttpRequest request) throws IOException, InterruptedException {
+    public Chart sendChartRequest(HttpRequest request) throws IOException, InterruptedException {
         HttpResponse<String> response = sendRequest(request);
 
         if (response != null) {
@@ -63,7 +72,7 @@ public class RequestSender {
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public static Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest) throws IOException, InterruptedException {
+    public Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest) throws IOException, InterruptedException {
         final HttpResponse<String>[] optionsResponse = new HttpResponse[1];
         final HttpResponse<String>[] searchResponse = new HttpResponse[1];
 
@@ -103,4 +112,5 @@ public class RequestSender {
         }
         return null;
     }
+
 }

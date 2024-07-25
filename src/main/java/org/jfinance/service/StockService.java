@@ -11,6 +11,16 @@ import java.net.http.HttpRequest;
  */
 public class StockService {
 
+    private static final StockService instance = new StockService();
+
+    private StockService() {};
+
+    public static StockService getInstance() {
+        return instance;
+    }
+
+    private static final RequestSender sender = RequestSender.getInstance();
+
     /**
      * Base URL for options data requests.
      */
@@ -29,7 +39,7 @@ public class StockService {
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public static Stock getStock(String symbol) throws IOException, InterruptedException {
+    public Stock getStock(String symbol) throws IOException, InterruptedException {
 
         HttpRequest optionsRequest = HttpRequest.newBuilder()
                 .uri(URI.create(OPTIONS_URL + symbol))
@@ -39,9 +49,7 @@ public class StockService {
                 .uri(URI.create(SEARCH_URL + symbol))
                 .build();
 
-        Stock stock = RequestSender.sendStockRequest(optionsRequest, searchRequest);
-
-        return stock;
+        return sender.sendStockRequest(optionsRequest, searchRequest);
     }
 
 }

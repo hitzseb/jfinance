@@ -3,6 +3,7 @@ package org.jfinance.model;
 import java.util.List;
 
 public class AdjClose {
+
     private List<Double> adjclose;
 
     public AdjClose() {
@@ -22,4 +23,5 @@ public class AdjClose {
                 "adjclose=" + adjclose +
                 '}';
     }
+
 }

@@ -3,6 +3,7 @@ package org.jfinance.model;
 import java.util.List;
 
 public class Indicators {
+
     private List<Quote> quote;
     private List<AdjClose> adjclose;
 
@@ -32,4 +33,5 @@ public class Indicators {
                 ", adjclose=" + adjclose +
                 '}';
     }
+
 }

@@ -3,10 +3,11 @@ package org.jfinance.model;
 import java.util.List;
 
 public class Chart {
+
     private String symbol;
     private String currency;
     private String exchangeTimezoneName;
-    private List<Long> timestamp;
+    private List<String> timestamp;
     private Indicators indicators;
 
     public Chart() {
@@ -36,11 +37,11 @@ public class Chart {
         this.exchangeTimezoneName = exchangeTimezoneName;
     }
 
-    public List<Long> getTimestamp() {
+    public List<String> getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(List<Long> timestamp) {
+    public void setTimestamp(List<String> timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -63,10 +64,9 @@ public class Chart {
                 '}';
     }
 
-    public void printTable() {
+    public String buildTable() {
         if (timestamp == null || timestamp.isEmpty() || indicators == null || indicators.getQuote() == null || indicators.getQuote().isEmpty()) {
-            System.out.println("Chart has no data to show.");
-            return;
+            return "Chart has no data to show.";
         }
 
         List<Double> opens = indicators.getQuote().get(0).getOpen();
@@ -76,26 +76,11 @@ public class Chart {
         List<Long> volumes = indicators.getQuote().get(0).getVolume();
         List<Double> adjCloses = indicators.getAdjclose().get(0).getAdjclose();
 
-        TablePrinter.printTable(timestamp, opens, highs, lows, closes, adjCloses, volumes, null);
-    }
-
-    public void printTable(String timeZone) {
-        if (isEmpty()) {
-            System.out.println("Chart has no data to show.");
-            return;
-        }
-
-        List<Double> opens = indicators.getQuote().get(0).getOpen();
-        List<Double> highs = indicators.getQuote().get(0).getHigh();
-        List<Double> lows = indicators.getQuote().get(0).getLow();
-        List<Double> closes = indicators.getQuote().get(0).getClose();
-        List<Long> volumes = indicators.getQuote().get(0).getVolume();
-        List<Double> adjCloses = indicators.getAdjclose().get(0).getAdjclose();
-
-        TablePrinter.printTable(timestamp, opens, highs, lows, closes, adjCloses, volumes, timeZone);
+        return TableBuilder.buildTable(timestamp, opens, highs, lows, closes, adjCloses, volumes, null);
     }
 
     private boolean isEmpty() {
         return (timestamp == null || timestamp.isEmpty() || indicators == null || indicators.getQuote() == null || indicators.getQuote().isEmpty());
     }
+
 }

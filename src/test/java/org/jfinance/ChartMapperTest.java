@@ -10,6 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ChartMapperTest {
+
     @Test
     public void testFromJson() {
         String jsonStr = "{ \"chart\": { \"result\": [ { \"meta\": { \"currency\": \"USD\", \"symbol\": \"AAPL\", \"exchangeName\": \"NMS\", \"fullExchangeName\": \"NasdaqGS\", \"instrumentType\": \"EQUITY\", \"timezone\": \"EDT\", \"exchangeTimezoneName\": \"America/New_York\", \"regularMarketPrice\": 208.14, \"fiftyTwoWeekHigh\": 212.7, \"fiftyTwoWeekLow\": 206.59, \"regularMarketDayHigh\": 212.7, \"regularMarketDayLow\": 206.59, \"regularMarketVolume\": 78306092 }, \"timestamp\": [ 1629216000, 1629302400 ], \"indicators\": { \"quote\": [ { \"high\": [ 210.0, 211.0 ], \"close\": [ 209.0, 210.0 ], \"volume\": [ 123456, 123457 ], \"open\": [ 208.0, 209.0 ], \"low\": [ 207.0, 208.0 ] } ], \"adjclose\": [ { \"adjclose\": [ 209.0, 210.0 ] } ] } } ] } }";
@@ -24,11 +25,11 @@ class ChartMapperTest {
             assertEquals("America/New_York", chart.getExchangeTimezoneName());
 
             // Assert timestamp
-            List<Long> timestamps = chart.getTimestamp();
+            List<String> timestamps = chart.getTimestamp();
             assertNotNull(timestamps);
             assertEquals(2, timestamps.size());
-            assertEquals(1629216000L, timestamps.get(0));
-            assertEquals(1629302400L, timestamps.get(1));
+            assertEquals("2021-08-17", timestamps.get(0));
+            assertEquals("2021-08-18", timestamps.get(1));
 
             // Assert indicators
             assertNotNull(chart.getIndicators());
@@ -46,4 +47,5 @@ class ChartMapperTest {
             fail("Exception should not be thrown");
         }
     }
+
 }
