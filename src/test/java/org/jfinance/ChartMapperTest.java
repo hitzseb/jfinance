@@ -16,7 +16,7 @@ class ChartMapperTest {
         String jsonStr = "{ \"chart\": { \"result\": [ { \"meta\": { \"currency\": \"USD\", \"symbol\": \"AAPL\", \"exchangeName\": \"NMS\", \"fullExchangeName\": \"NasdaqGS\", \"instrumentType\": \"EQUITY\", \"timezone\": \"EDT\", \"exchangeTimezoneName\": \"America/New_York\", \"regularMarketPrice\": 208.14, \"fiftyTwoWeekHigh\": 212.7, \"fiftyTwoWeekLow\": 206.59, \"regularMarketDayHigh\": 212.7, \"regularMarketDayLow\": 206.59, \"regularMarketVolume\": 78306092 }, \"timestamp\": [ 1629216000, 1629302400 ], \"indicators\": { \"quote\": [ { \"high\": [ 210.0, 211.0 ], \"close\": [ 209.0, 210.0 ], \"volume\": [ 123456, 123457 ], \"open\": [ 208.0, 209.0 ], \"low\": [ 207.0, 208.0 ] } ], \"adjclose\": [ { \"adjclose\": [ 209.0, 210.0 ] } ] } } ] } }";
 
         try {
-            Chart chart = ChartMapper.buildChartfromJson(jsonStr);
+            Chart chart = ChartMapper.buildChartfromJson(jsonStr, "yyyy-MM-dd");
             assertNotNull(chart);
 
             // Assert fields

@@ -49,7 +49,7 @@ public class StockService {
                 .uri(URI.create(SEARCH_URL + symbol))
                 .build();
 
-        return sender.sendStockRequest(optionsRequest, searchRequest);
+        return sender.sendStockRequest(optionsRequest, searchRequest, "yyyy-MM-dd");
     }
 
 }

@@ -21,17 +21,40 @@ public class ChartMapper {
      * Builds a Chart object from a JSON string.
      *
      * @param jsonStr the JSON string representing the chart data
+     * @param format the time format of the chart
      * @return a Chart object
      * @throws IOException if an I/O exception occurs during JSON parsing
      */
-    public static Chart buildChartfromJson(String jsonStr) throws IOException {
+    public static Chart buildChartfromJson(String jsonStr, String format) throws IOException {
         JsonNode rootNode = objectMapper.readTree(jsonStr);
         JsonNode resultNode = rootNode.at("/chart/result/0");
 
         Chart chart = mapMeta(resultNode.at("/meta"));
         List<Long> timestampList = mapTimestampList(resultNode.at("/timestamp"));
         Indicators indicators = mapIndicators(resultNode.at("/indicators"));
-        chart.setTimestamp(tsConverter.convertTimestampsToDates(timestampList));
+        chart.setTimestamp(tsConverter.convertTimestampsToDates(timestampList, format));
+        chart.setIndicators(indicators);
+
+        return chart;
+    }
+
+    /**
+     * Builds a Chart object from a JSON string.
+     *
+     * @param jsonStr the JSON string representing the chart data
+     * @param format the time format of the chart
+     * @param timezone the time zone of the chart
+     * @return a Chart object
+     * @throws IOException if an I/O exception occurs during JSON parsing
+     */
+    public static Chart buildChartfromJson(String jsonStr, String format, String timezone) throws IOException {
+        JsonNode rootNode = objectMapper.readTree(jsonStr);
+        JsonNode resultNode = rootNode.at("/chart/result/0");
+
+        Chart chart = mapMeta(resultNode.at("/meta"));
+        List<Long> timestampList = mapTimestampList(resultNode.at("/timestamp"));
+        Indicators indicators = mapIndicators(resultNode.at("/indicators"));
+        chart.setTimestamp(tsConverter.convertTimestampsToDates(timestampList, format, timezone));
         chart.setIndicators(indicators);
 
         return chart;
@@ -77,8 +100,10 @@ public class ChartMapper {
         List<Quote> quotes = mapQuotes(indicatorsNode.at("/quote/0"));
         indicators.setQuote(quotes);
 
-        List<AdjClose> adjCloses = mapAdjCloses(indicatorsNode.at("/adjclose/0"));
-        indicators.setAdjclose(adjCloses);
+        if (indicatorsNode.has("adjclose")) {
+            List<AdjClose> adjCloses = mapAdjCloses(indicatorsNode.at("/adjclose/0"));
+            indicators.setAdjclose(adjCloses);
+        }
 
         return indicators;
     }

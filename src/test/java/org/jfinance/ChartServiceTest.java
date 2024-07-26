@@ -15,7 +15,7 @@ class ChartServiceTest {
         String interval = "1d";
         String range = "5d";
 
-        Chart chart = YahooFinanceAPI.getChart(symbol, interval, range);
+        Chart chart = YahooFinanceAPI.getChartByRange(symbol, interval, range);
 
         assertChartItems(chart);
     }
@@ -27,7 +27,7 @@ class ChartServiceTest {
         String period1 = "2024-01-01";
         String period2 = "2024-06-30";
 
-        Chart chart = YahooFinanceAPI.getChart(symbol, interval, period1, period2);
+        Chart chart = YahooFinanceAPI.getChartByPeriod(symbol, interval, period1, period2);
 
         assertChartItems(chart);
     }

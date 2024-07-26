@@ -54,11 +54,28 @@ public class RequestSender {
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public Chart sendChartRequest(HttpRequest request) throws IOException, InterruptedException {
+    public Chart sendChartRequest(HttpRequest request, String format) throws IOException, InterruptedException {
         HttpResponse<String> response = sendRequest(request);
 
         if (response != null) {
-            return ChartMapper.buildChartfromJson(response.body());
+            return ChartMapper.buildChartfromJson(response.body(), format);
+        }
+        return null;
+    }
+
+    /**
+     * Sends an HTTP request to obtain chart data based on the specified timezone.
+     *
+     * @param request the HTTP request to be sent
+     * @return a Chart object if the request is successful, otherwise null
+     * @throws IOException if an I/O exception occurs
+     * @throws InterruptedException if the operation is interrupted
+     */
+    public Chart sendChartRequest(HttpRequest request, String format, String timezone) throws IOException, InterruptedException {
+        HttpResponse<String> response = sendRequest(request);
+
+        if (response != null) {
+            return ChartMapper.buildChartfromJson(response.body(), format, timezone);
         }
         return null;
     }
@@ -72,7 +89,7 @@ public class RequestSender {
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest) throws IOException, InterruptedException {
+    public Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest, String format) throws IOException, InterruptedException {
         final HttpResponse<String>[] optionsResponse = new HttpResponse[1];
         final HttpResponse<String>[] searchResponse = new HttpResponse[1];
 
@@ -108,7 +125,7 @@ public class RequestSender {
 
         // Process the results
         if (optionsResponse[0] != null && searchResponse[0] != null) {
-            return StockMapper.buildStockFromJson(optionsResponse[0].body(), searchResponse[0].body());
+            return StockMapper.buildStockFromJson(optionsResponse[0].body(), searchResponse[0].body(), format);
         }
         return null;
     }

@@ -8,8 +8,8 @@ public class ChartExampleTest {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        Chart rangeChart = YahooFinanceAPI.getChart("AAPL", "1d", "5d");
-        Chart periodChart = YahooFinanceAPI.getChart("AAPL", "1d", "2024-03-01", "2024-04-01");
+        Chart rangeChart = YahooFinanceAPI.getChartByRange("AAPL", "1h", "1d");
+        Chart periodChart = YahooFinanceAPI.getChartByPeriod("AAPL", "5d", "2024-03-01", "2024-04-01");
 
         System.out.println("\n" + rangeChart.toString() + "\n");
         System.out.println(rangeChart.buildTable());

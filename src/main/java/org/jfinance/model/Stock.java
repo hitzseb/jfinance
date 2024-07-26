@@ -9,11 +9,21 @@ public class Stock {
     private String industry;
     private String exchange;
     private String currency;
+    private String exchangeTimezone;
     private double regularMarketPrice;
     private double regularMarketChangePercent;
     private long marketCap;
     private double bookValue;
     private double priceToBook;
+    private long averageDailyVolume3Month;
+    private long averageDailyVolume10Day;
+    private double fiftyTwoWeekLowChange;
+    private double fiftyTwoWeekLowChangePercent;
+    private String fiftyTwoWeekRange;
+    private double fiftyTwoWeekLow;
+    private double fiftyTwoWeekHighChange;
+    private double fiftyTwoWeekHighChangePercent;
+    private double fiftyTwoWeekHigh;
     private double trailingPE;
     private double forwardPE;
     private double epsTrailingTwelveMonths;
@@ -85,6 +95,14 @@ public class Stock {
         this.currency = currency;
     }
 
+    public String getExchangeTimezone() {
+        return exchangeTimezone;
+    }
+
+    public void setExchangeTimezone(String exchangeTimezone) {
+        this.exchangeTimezone = exchangeTimezone;
+    }
+
     public double getRegularMarketPrice() {
         return regularMarketPrice;
     }
@@ -123,6 +141,78 @@ public class Stock {
 
     public void setPriceToBook(double priceToBook) {
         this.priceToBook = priceToBook;
+    }
+
+    public long getAverageDailyVolume3Month() {
+        return averageDailyVolume3Month;
+    }
+
+    public void setAverageDailyVolume3Month(long averageDailyVolume3Month) {
+        this.averageDailyVolume3Month = averageDailyVolume3Month;
+    }
+
+    public long getAverageDailyVolume10Day() {
+        return averageDailyVolume10Day;
+    }
+
+    public void setAverageDailyVolume10Day(long averageDailyVolume10Day) {
+        this.averageDailyVolume10Day = averageDailyVolume10Day;
+    }
+
+    public double getFiftyTwoWeekLowChange() {
+        return fiftyTwoWeekLowChange;
+    }
+
+    public void setFiftyTwoWeekLowChange(double fiftyTwoWeekLowChange) {
+        this.fiftyTwoWeekLowChange = fiftyTwoWeekLowChange;
+    }
+
+    public double getFiftyTwoWeekLowChangePercent() {
+        return fiftyTwoWeekLowChangePercent;
+    }
+
+    public void setFiftyTwoWeekLowChangePercent(double fiftyTwoWeekLowChangePercent) {
+        this.fiftyTwoWeekLowChangePercent = fiftyTwoWeekLowChangePercent;
+    }
+
+    public String getFiftyTwoWeekRange() {
+        return fiftyTwoWeekRange;
+    }
+
+    public void setFiftyTwoWeekRange(String fiftyTwoWeekRange) {
+        this.fiftyTwoWeekRange = fiftyTwoWeekRange;
+    }
+
+    public double getFiftyTwoWeekHighChange() {
+        return fiftyTwoWeekHighChange;
+    }
+
+    public void setFiftyTwoWeekHighChange(double fiftyTwoWeekHighChange) {
+        this.fiftyTwoWeekHighChange = fiftyTwoWeekHighChange;
+    }
+
+    public double getFiftyTwoWeekHighChangePercent() {
+        return fiftyTwoWeekHighChangePercent;
+    }
+
+    public void setFiftyTwoWeekHighChangePercent(double fiftyTwoWeekHighChangePercent) {
+        this.fiftyTwoWeekHighChangePercent = fiftyTwoWeekHighChangePercent;
+    }
+
+    public double getFiftyTwoWeekLow() {
+        return fiftyTwoWeekLow;
+    }
+
+    public void setFiftyTwoWeekLow(double fiftyTwoWeekLow) {
+        this.fiftyTwoWeekLow = fiftyTwoWeekLow;
+    }
+
+    public double getFiftyTwoWeekHigh() {
+        return fiftyTwoWeekHigh;
+    }
+
+    public void setFiftyTwoWeekHigh(double fiftyTwoWeekHigh) {
+        this.fiftyTwoWeekHigh = fiftyTwoWeekHigh;
     }
 
     public double getTrailingPE() {
@@ -223,21 +313,31 @@ public class Stock {
                 ", industry='" + industry + '\'' +
                 ", exchange='" + exchange + '\'' +
                 ", currency='" + currency + '\'' +
+                ", exchangeTimezone='" + exchangeTimezone + '\'' +
                 ", regularMarketPrice=" + regularMarketPrice +
                 ", regularMarketChangePercent=" + regularMarketChangePercent +
                 ", marketCap=" + marketCap +
                 ", bookValue=" + bookValue +
                 ", priceToBook=" + priceToBook +
+                ", averageDailyVolume3Month=" + averageDailyVolume3Month +
+                ", averageDailyVolume10Day=" + averageDailyVolume10Day +
+                ", fiftyTwoWeekLowChange=" + fiftyTwoWeekLowChange +
+                ", fiftyTwoWeekLowChangePercent=" + fiftyTwoWeekLowChangePercent +
+                ", fiftyTwoWeekRange=" + fiftyTwoWeekRange +
+                ", fiftyTwoWeekHighChange=" + fiftyTwoWeekHighChange +
+                ", fiftyTwoWeekHighChangePercent=" + fiftyTwoWeekHighChangePercent +
+                ", fiftyTwoWeekLow=" + fiftyTwoWeekLow +
+                ", fiftyTwoWeekHigh=" + fiftyTwoWeekHigh +
                 ", trailingPE=" + trailingPE +
                 ", forwardPE=" + forwardPE +
                 ", epsTrailingTwelveMonths=" + epsTrailingTwelveMonths +
                 ", epsCurrentYear=" + epsCurrentYear +
                 ", epsForward=" + epsForward +
                 ", priceEpsCurrentYear=" + priceEpsCurrentYear +
-                ", dividendDate=" + dividendDate +
+                ", dividendDate='" + dividendDate + '\'' +
                 ", trailingAnnualDividendRate=" + trailingAnnualDividendRate +
                 ", trailingAnnualDividendYield=" + trailingAnnualDividendYield +
-                ", earningsTimestamp=" + earningsTimestamp +
+                ", earningsTimestamp='" + earningsTimestamp + '\'' +
                 ", sharesOutstanding=" + sharesOutstanding +
                 '}';
     }

@@ -65,7 +65,7 @@ public class Chart {
     }
 
     public String buildTable() {
-        if (timestamp == null || timestamp.isEmpty() || indicators == null || indicators.getQuote() == null || indicators.getQuote().isEmpty()) {
+        if (isEmpty()) {
             return "Chart has no data to show.";
         }
 
@@ -74,9 +74,17 @@ public class Chart {
         List<Double> lows = indicators.getQuote().get(0).getLow();
         List<Double> closes = indicators.getQuote().get(0).getClose();
         List<Long> volumes = indicators.getQuote().get(0).getVolume();
-        List<Double> adjCloses = indicators.getAdjclose().get(0).getAdjclose();
 
-        return TableBuilder.buildTable(timestamp, opens, highs, lows, closes, adjCloses, volumes, null);
+        List<Double> adjCloses = null;
+        if (indicators.getAdjclose() != null && !indicators.getAdjclose().isEmpty()) {
+            adjCloses = indicators.getAdjclose().get(0).getAdjclose();
+        }
+
+        if (adjCloses != null) {
+            return TableBuilder.buildTable(timestamp, opens, highs, lows, closes, adjCloses, volumes, null);
+        } else {
+            return TableBuilder.buildTableWithoutAdjClose(timestamp, opens, highs, lows, closes, volumes, null);
+        }
     }
 
     private boolean isEmpty() {

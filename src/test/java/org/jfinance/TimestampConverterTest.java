@@ -30,7 +30,7 @@ class TimestampConverterTest {
         List<Long> timestamps = Arrays.asList(timestamp1, timestamp2);
         List<String> expectedDates = Arrays.asList(isoDate1, isoDate2);
 
-        List<String> actualDates = tsConverter.convertTimestampsToDates(timestamps);
+        List<String> actualDates = tsConverter.convertTimestampsToDates(timestamps, "yyyy-MM-dd");
         assertEquals(expectedDates, actualDates);
     }
 
@@ -38,7 +38,7 @@ class TimestampConverterTest {
     public void testConvertTimestampToDate() {
         String expectedDate = isoDate1;
 
-        String actualDate = tsConverter.convertTimestampToDate(timestamp1);
+        String actualDate = tsConverter.convertTimestampToDate(timestamp1, "yyyy-MM-dd");
         assertEquals(expectedDate, actualDate);
     }
 
