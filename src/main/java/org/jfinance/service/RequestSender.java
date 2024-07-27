@@ -21,6 +21,8 @@ public class RequestSender {
     }
 
     private static final HttpClient client = HttpClient.newHttpClient();
+    private static final ChartMapper chartMapper = ChartMapper.getInstance();
+    private static final StockMapper stockMapper = StockMapper.getInstance();
 
     /**
      * Sends an HTTP request and returns the response.
@@ -58,7 +60,7 @@ public class RequestSender {
         HttpResponse<String> response = sendRequest(request);
 
         if (response != null) {
-            return ChartMapper.buildChartfromJson(response.body(), format);
+            return chartMapper.buildChartFromJson(response.body(), format);
         }
         return null;
     }
@@ -75,7 +77,7 @@ public class RequestSender {
         HttpResponse<String> response = sendRequest(request);
 
         if (response != null) {
-            return ChartMapper.buildChartfromJson(response.body(), format, timezone);
+            return chartMapper.buildChartfromJson(response.body(), format, timezone);
         }
         return null;
     }
@@ -125,7 +127,7 @@ public class RequestSender {
 
         // Process the results
         if (optionsResponse[0] != null && searchResponse[0] != null) {
-            return StockMapper.buildStockFromJson(optionsResponse[0].body(), searchResponse[0].body(), format);
+            return stockMapper.buildStockFromJson(optionsResponse[0].body(), searchResponse[0].body(), format);
         }
         return null;
     }

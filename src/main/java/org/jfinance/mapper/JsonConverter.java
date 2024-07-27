@@ -10,13 +10,21 @@ import java.util.List;
  */
 public class JsonConverter {
 
+    private static final JsonConverter instance = new JsonConverter();
+
+    private JsonConverter() {}
+
+    public static JsonConverter getInstance() {
+        return instance;
+    }
+
     /**
      * Converts a JSON node to a list of doubles.
      *
      * @param node the JSON node to convert
      * @return a list of doubles extracted from the JSON node
      */
-    public static List<Double> convertJsonNodeToList(JsonNode node) {
+    public List<Double> convertJsonNodeToList(JsonNode node) {
         List<Double> list = new ArrayList<>();
         for (JsonNode n : node) {
             list.add(n.asDouble());
@@ -30,7 +38,7 @@ public class JsonConverter {
      * @param node the JSON node to convert
      * @return a list of longs extracted from the JSON node
      */
-    public static List<Long> convertJsonNodeToListLong(JsonNode node) {
+    public List<Long> convertJsonNodeToListLong(JsonNode node) {
         List<Long> list = new ArrayList<>();
         for (JsonNode n : node) {
             list.add(n.asLong());

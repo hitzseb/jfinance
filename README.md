@@ -20,7 +20,7 @@ Valid Intervals:
 
 ```
 Chart chart = YahooFinanceAPI.getChartByRange("AAPL", "1h", "1d");
-System.out.println(chart.buildTable();
+System.out.println(TableBuilder.buildFromChart(chart));
 ```
 Example output:
 ```
@@ -43,7 +43,7 @@ Valid Ranges:
 
 ```
 Chart chart = YahooFinanceAPI.getChartByPeriod("AAPL", "5d", "2024-03-01", "2024-04-01");
-System.out.println(chart.buildTable();
+System.out.println(TableBuilder.buildFromChart(chart));
 ```
 Example output:
 ```

@@ -1,6 +1,7 @@
 package org.jfinance;
 
 import org.jfinance.model.Chart;
+import org.jfinance.service.TableBuilder;
 
 import java.io.IOException;
 
@@ -12,10 +13,10 @@ public class ChartExampleTest {
         Chart periodChart = YahooFinanceAPI.getChartByPeriod("AAPL", "5d", "2024-03-01", "2024-04-01");
 
         System.out.println("\n" + rangeChart.toString() + "\n");
-        System.out.println(rangeChart.buildTable());
+        System.out.println(TableBuilder.buildFromChart(rangeChart));
 
         System.out.println("\n" + periodChart.toString() + "\n");
-        System.out.println(periodChart.buildTable());
+        System.out.println(TableBuilder.buildFromChart(periodChart));
 
     }
 

@@ -12,6 +12,14 @@ import java.io.IOException;
  */
 public class StockMapper {
 
+    private static final StockMapper instance = new StockMapper();
+
+    private StockMapper() {}
+
+    public static StockMapper getInstance() {
+        return instance;
+    }
+
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final TimestampConverter tsConverter = TimestampConverter.getInstance();
 
@@ -23,7 +31,7 @@ public class StockMapper {
      * @return a Stock object
      * @throws IOException if an I/O exception occurs during JSON parsing
      */
-    public static Stock buildStockFromJson(String optionsJsonStr, String searchJsonStr, String format) throws IOException {
+    public Stock buildStockFromJson(String optionsJsonStr, String searchJsonStr, String format) throws IOException {
         JsonNode optionsNode = getOptionsNode(optionsJsonStr);
         JsonNode searchNode = getSearchNode(searchJsonStr);
 

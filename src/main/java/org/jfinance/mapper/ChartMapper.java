@@ -14,8 +14,17 @@ import java.util.List;
  */
 public class ChartMapper {
 
+    private static final ChartMapper instance = new ChartMapper();
+
+    private ChartMapper() {}
+
+    public static ChartMapper getInstance() {
+        return instance;
+    }
+
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final TimestampConverter tsConverter = TimestampConverter.getInstance();
+    private static final JsonConverter jsonConverter = JsonConverter.getInstance();
 
     /**
      * Builds a Chart object from a JSON string.
@@ -25,7 +34,7 @@ public class ChartMapper {
      * @return a Chart object
      * @throws IOException if an I/O exception occurs during JSON parsing
      */
-    public static Chart buildChartfromJson(String jsonStr, String format) throws IOException {
+    public Chart buildChartFromJson(String jsonStr, String format) throws IOException {
         JsonNode rootNode = objectMapper.readTree(jsonStr);
         JsonNode resultNode = rootNode.at("/chart/result/0");
 
@@ -47,7 +56,7 @@ public class ChartMapper {
      * @return a Chart object
      * @throws IOException if an I/O exception occurs during JSON parsing
      */
-    public static Chart buildChartfromJson(String jsonStr, String format, String timezone) throws IOException {
+    public Chart buildChartfromJson(String jsonStr, String format, String timezone) throws IOException {
         JsonNode rootNode = objectMapper.readTree(jsonStr);
         JsonNode resultNode = rootNode.at("/chart/result/0");
 
@@ -117,11 +126,11 @@ public class ChartMapper {
     private static List<Quote> mapQuotes(JsonNode quoteNode) {
         List<Quote> quotes = new ArrayList<>();
         Quote quote = new Quote();
-        quote.setOpen(JsonConverter.convertJsonNodeToList(quoteNode.get("open")));
-        quote.setHigh(JsonConverter.convertJsonNodeToList(quoteNode.get("high")));
-        quote.setLow(JsonConverter.convertJsonNodeToList(quoteNode.get("low")));
-        quote.setClose(JsonConverter.convertJsonNodeToList(quoteNode.get("close")));
-        quote.setVolume(JsonConverter.convertJsonNodeToListLong(quoteNode.get("volume")));
+        quote.setOpen(jsonConverter.convertJsonNodeToList(quoteNode.get("open")));
+        quote.setHigh(jsonConverter.convertJsonNodeToList(quoteNode.get("high")));
+        quote.setLow(jsonConverter.convertJsonNodeToList(quoteNode.get("low")));
+        quote.setClose(jsonConverter.convertJsonNodeToList(quoteNode.get("close")));
+        quote.setVolume(jsonConverter.convertJsonNodeToListLong(quoteNode.get("volume")));
         quotes.add(quote);
         return quotes;
     }
@@ -135,7 +144,7 @@ public class ChartMapper {
     private static List<AdjClose> mapAdjCloses(JsonNode adjCloseNode) {
         List<AdjClose> adjCloses = new ArrayList<>();
         AdjClose adjClose = new AdjClose();
-        adjClose.setAdjclose(JsonConverter.convertJsonNodeToList(adjCloseNode.get("adjclose")));
+        adjClose.setAdjclose(jsonConverter.convertJsonNodeToList(adjCloseNode.get("adjclose")));
         adjCloses.add(adjClose);
         return adjCloses;
     }

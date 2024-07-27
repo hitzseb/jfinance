@@ -1,5 +1,6 @@
 package org.jfinance;
 
+import org.jfinance.mapper.ChartMapper;
 import org.jfinance.mapper.StockMapper;
 import org.jfinance.model.Stock;
 import org.jfinance.service.TimestampConverter;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class StockMapperTest {
 
     private static final TimestampConverter tsConverter = TimestampConverter.getInstance();
+    private static final StockMapper stockMapper = StockMapper.getInstance();
 
     @Test
     public void testBuildStockfromJson() {
@@ -33,7 +35,7 @@ class StockMapperTest {
                 "\"industry\": \"Consumer Electronics\", \"exchDisp\": \"NASDAQ\" } ] }";
 
         try {
-            Stock stock = StockMapper.buildStockFromJson(optionsJsonStr, searchJsonStr, "yyyy-MM-dd");
+            Stock stock = stockMapper.buildStockFromJson(optionsJsonStr, searchJsonStr, "yyyy-MM-dd");
             assertNotNull(stock);
 
             // Assert stock fields
