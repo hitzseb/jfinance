@@ -6,7 +6,7 @@ A Java library that provides a simple interface to interact with the Yahoo Finan
 Retrieve detailed information about a stock:
 ```
 Stock stock = YahooFinanceAPI.getStock("AAPL");
-System.out.println(stock.toString());
+System.out.println(stock);
 ```
 Example output:
 ```
@@ -20,7 +20,7 @@ Valid Intervals:
 
 ```
 Chart chart = YahooFinanceAPI.getChartByRange("AAPL", "1h", "1d");
-System.out.println(TableBuilder.buildFromChart(chart));
+System.out.println(YahooFinanceAPI.buildTable(chart));
 ```
 Example output:
 ```

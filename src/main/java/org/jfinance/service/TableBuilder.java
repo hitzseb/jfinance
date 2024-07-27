@@ -10,13 +10,21 @@ import java.util.List;
  */
 public class TableBuilder {
 
+    private static final TableBuilder instance = new TableBuilder();
+
+    private TableBuilder() {}
+
+    public static TableBuilder getInstance() {
+        return instance;
+    }
+
     /**
      * Generates a table based on the given chart data. If adjusted closing prices are available, they are included.
      *
      * @param chart the chart containing the data to include in the table
      * @return the formatted table as a string
      */
-    public static String buildFromChart(Chart chart) {
+    public String buildFromChart(Chart chart) {
         if (isEmpty(chart)) {
             return "Chart has no data to show.";
         }
@@ -37,9 +45,9 @@ public class TableBuilder {
         List<String> timestamp = chart.getTimestamp();
 
         if (adjCloses != null) {
-            return buildFullTable(timestamp, opens, highs, lows, closes, adjCloses, volumes, null);
+            return buildFullTable(timestamp, opens, highs, lows, closes, adjCloses, volumes);
         } else {
-            return buildTableWithoutAdjClose(timestamp, opens, highs, lows, closes, volumes, null);
+            return buildTableWithoutAdjClose(timestamp, opens, highs, lows, closes, volumes);
         }
     }
 
@@ -65,10 +73,9 @@ public class TableBuilder {
      * @param closes the list of closing prices to print
      * @param adjCloses the list of adjusted closing prices to print
      * @param volumes the list of volumes to print
-     * @param timeZone the timezone identifier for converting timestamps to dates
      */
     private static String buildFullTable(List<String> timestamps, List<Double> opens, List<Double> highs, List<Double> lows,
-                                    List<Double> closes, List<Double> adjCloses, List<Long> volumes, String timeZone) {
+                                    List<Double> closes, List<Double> adjCloses, List<Long> volumes) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(String.format("%-20s %-10s %-10s %-10s %-10s %-10s %-10s\n", "Date", "Open", "High", "Low", "Close", "Adj Close", "Volume"));
@@ -91,10 +98,9 @@ public class TableBuilder {
      * @param lows the list of low prices to print
      * @param closes the list of closing prices to print
      * @param volumes the list of volumes to print
-     * @param timeZone the timezone identifier for converting timestamps to dates
      */
     private static String buildTableWithoutAdjClose(List<String> timestamps, List<Double> opens, List<Double> highs, List<Double> lows,
-                                                   List<Double> closes, List<Long> volumes, String timeZone) {
+                                                   List<Double> closes, List<Long> volumes) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(String.format("%-20s %-10s %-10s %-10s %-10s %-10s\n", "Date", "Open", "High", "Low", "Close", "Volume"));

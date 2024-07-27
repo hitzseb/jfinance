@@ -56,7 +56,7 @@ public class ChartMapper {
      * @return a Chart object
      * @throws IOException if an I/O exception occurs during JSON parsing
      */
-    public Chart buildChartfromJson(String jsonStr, String format, String timezone) throws IOException {
+    public Chart buildChartFromJson(String jsonStr, String format, String timezone) throws IOException {
         JsonNode rootNode = objectMapper.readTree(jsonStr);
         JsonNode resultNode = rootNode.at("/chart/result/0");
 

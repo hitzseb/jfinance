@@ -9,7 +9,7 @@ public class StockExampleTest {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         Stock stock = YahooFinanceAPI.getStock("AAPL");
-        System.out.println(stock.toString());
+        System.out.println(stock);
 
     }
 

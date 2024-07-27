@@ -4,6 +4,7 @@ import org.jfinance.model.Chart;
 import org.jfinance.model.Stock;
 import org.jfinance.service.ChartService;
 import org.jfinance.service.StockService;
+import org.jfinance.service.TableBuilder;
 
 import java.io.IOException;
 
@@ -13,8 +14,21 @@ import java.io.IOException;
  */
 public class YahooFinanceAPI {
 
-    private static final ChartService chartService = ChartService.getInstance();
     private static final StockService stockService = StockService.getInstance();
+    private static final ChartService chartService = ChartService.getInstance();
+    private static final TableBuilder tableBuilder = TableBuilder.getInstance();
+
+    /**
+     * Retrieves stock data based on the provided stock symbol.
+     *
+     * @param symbol the stock symbol
+     * @return a Stock object containing the stock data
+     * @throws IOException if an I/O exception occurs
+     * @throws InterruptedException if the operation is interrupted
+     */
+    public static Stock getStock(String symbol) throws IOException, InterruptedException {
+        return stockService.getStock(symbol);
+    }
 
     /**
      * Retrieves chart data based on the provided symbol, interval, and specific time periods.
@@ -85,15 +99,15 @@ public class YahooFinanceAPI {
     }
 
     /**
-     * Retrieves stock data based on the provided stock symbol.
+     * Generates a table representation of the provided chart data.
+     * The table includes timestamps, opening prices, high prices, low prices, closing prices,
+     * adjusted closing prices (if available), and volumes.
      *
-     * @param symbol the stock symbol
-     * @return a Stock object containing the stock data
-     * @throws IOException if an I/O exception occurs
-     * @throws InterruptedException if the operation is interrupted
+     * @param chart the Chart object containing the data to be included in the table
+     * @return a string representing the formatted table with chart data
      */
-    public static Stock getStock(String symbol) throws IOException, InterruptedException {
-        return stockService.getStock(symbol);
+    public static String buildTable(Chart chart) {
+        return tableBuilder.buildFromChart(chart);
     }
 
 }

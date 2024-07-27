@@ -77,7 +77,7 @@ public class RequestSender {
         HttpResponse<String> response = sendRequest(request);
 
         if (response != null) {
-            return chartMapper.buildChartfromJson(response.body(), format, timezone);
+            return chartMapper.buildChartFromJson(response.body(), format, timezone);
         }
         return null;
     }
