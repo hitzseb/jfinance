@@ -1,5 +1,6 @@
 package org.jfinance.mapper;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jfinance.model.Stock;
@@ -24,18 +25,23 @@ public class StockMapper {
     private static final TimestampConverter tsConverter = TimestampConverter.getInstance();
 
     /**
-     * Builds a Stock object from two JSON strings representing options and search data.
+     * Builds a Stock object from JSON strings representing options data, search data, and quote data.
      *
      * @param optionsJsonStr the JSON string representing the options data
      * @param searchJsonStr the JSON string representing the search data
+     * @param quoteJson the JSON string representing the quote data
+     * @param format the date format to be used for timestamp conversion
      * @return a Stock object
      * @throws IOException if an I/O exception occurs during JSON parsing
      */
-    public Stock buildStockFromJson(String optionsJsonStr, String searchJsonStr, String format) throws IOException {
+    public Stock buildStockFromJson(String optionsJsonStr, String searchJsonStr, String quoteJson, String format) throws IOException {
         JsonNode optionsNode = getOptionsNode(optionsJsonStr);
         JsonNode searchNode = getSearchNode(searchJsonStr);
+        JsonNode bodyNode = getBodyNode(quoteJson);
+        JsonNode resNode = getResNode(bodyNode);
+        JsonNode dfkNode = getDfkNode(resNode);
 
-        return mapStock(optionsNode, searchNode, format);
+        return mapStock(optionsNode, searchNode, resNode, dfkNode, format);
     }
 
     /**
@@ -63,13 +69,54 @@ public class StockMapper {
     }
 
     /**
+     * Extracts the result node from the body node.
+     *
+     * @param bodyNode the JSON node representing the body data
+     * @return the JSON node representing the result data
+     */
+    private static JsonNode getResNode(JsonNode bodyNode) {
+        return bodyNode
+                .path("quoteSummary")
+                .path("result")
+                .get(0);
+    }
+
+    /**
+     * Extracts the default key statistics node from the result node.
+     *
+     * @param resNode the JSON node representing the result data
+     * @return the JSON node representing the default key statistics data
+     */
+    private static JsonNode getDfkNode(JsonNode resNode) {
+        return resNode.path("defaultKeyStatistics");
+    }
+
+    /**
+     * Extracts the body node from the JSON string.
+     *
+     * @param jsonStr the JSON string representing the quote data
+     * @return the JSON node representing the body data
+     * @throws JsonProcessingException if a JSON processing exception occurs during parsing
+     */
+    private static JsonNode getBodyNode(String jsonStr) throws JsonProcessingException {
+        // Parse the root JSON
+        JsonNode rootNode = objectMapper.readTree(jsonStr);
+        String bodyJson = rootNode.path("body").asText();
+        JsonNode bodyNode = objectMapper.readTree(bodyJson);
+        return bodyNode;
+    }
+
+    /**
      * Maps the JSON nodes to a Stock object.
      *
      * @param optionsNode the JSON node representing the options data
      * @param searchNode the JSON node representing the search data
+     * @param resNode the JSON node representing the result data
+     * @param dfkNode the JSON node representing the default key statistics data
+     * @param format the date format to be used for timestamp conversion
      * @return a Stock object
      */
-    private static Stock mapStock(JsonNode optionsNode, JsonNode searchNode, String format) {
+    private static Stock mapStock(JsonNode optionsNode, JsonNode searchNode, JsonNode resNode, JsonNode dfkNode, String format) {
         Stock stock = new Stock();
         stock.setSymbol(optionsNode.get("symbol").asText());
         stock.setName(optionsNode.get("longName").asText());
@@ -105,7 +152,34 @@ public class StockMapper {
         stock.setTrailingAnnualDividendYield(optionsNode.get("trailingAnnualDividendYield").asDouble());
         Long earningsTimestamp = optionsNode.get("earningsTimestamp").asLong();
         stock.setEarningsTimestamp(tsConverter.convertTimestampToDate(earningsTimestamp, format));
-        stock.setSharesOutstanding(optionsNode.get("sharesOutstanding").asLong());
+        stock.setEnterpriseValue(dfkNode.path("enterpriseValue").path("raw").asLong());
+        stock.setFloatShares(dfkNode.path("floatShares").path("raw").asLong());
+        stock.setSharesOutstanding(dfkNode.path("sharesOutstanding").path("raw").asLong());
+        stock.setSharesShort(dfkNode.path("sharesShort").path("raw").asLong());
+        stock.setShortRatio(dfkNode.path("shortRatio").path("raw").asDouble());
+        stock.setShortPercentOfFloat(dfkNode.path("shortPercentOfFloat").path("raw").asDouble());
+        stock.setImpliedSharesOutstanding(dfkNode.path("impliedSharesOutstanding").path("raw").asLong());
+        stock.setNetIncomeToCommon(dfkNode.path("netIncomeToCommon").path("raw").asDouble());
+        stock.setPegRatio(dfkNode.path("pegRatio").path("raw").floatValue());
+        stock.setEnterpriseToRevenue(dfkNode.path("enterpriseToRevenue").path("raw").floatValue());
+        stock.setEnterpriseToEbitda(dfkNode.path("enterpriseToEbitda").path("raw").floatValue());
+        stock.setLongBusinessSummary(resNode.path("summaryProfile").path("longBusinessSummary").asText());
+        stock.setTotalCash(resNode.path("financialData").path("totalCash").path("raw").asLong());
+        stock.setTotalDebt(resNode.path("financialData").path("totalDebt").path("raw").asLong());
+        stock.setTotalRevenue(resNode.path("financialData").path("totalRevenue").path("raw").asLong());
+        stock.setEbitda(resNode.path("financialData").path("ebitda").path("raw").asLong());
+        stock.setDebtToEquity(resNode.path("financialData").path("debtToEquity").path("raw").floatValue());
+        stock.setRevenuePerShare(resNode.path("financialData").path("revenuePerShare").path("raw").floatValue());
+        stock.setReturnOnAssets(resNode.path("financialData").path("returnOnAssets").path("raw").floatValue());
+        stock.setReturnOnEquity(resNode.path("financialData").path("returnOnEquity").path("raw").floatValue());
+        stock.setFreeCashflow(resNode.path("financialData").path("financialData").path("freeCashflow").path("raw").asLong());
+        stock.setOperatingCashflow(resNode.path("financialData").path("operatingCashflow").path("raw").asLong());
+        stock.setEarningsGrowth(resNode.path("financialData").path("earningsGrowth").path("raw").floatValue());
+        stock.setRevenueGrowth(resNode.path("financialData").path("revenueGrowth").path("raw").floatValue());
+        stock.setGrossMargins(resNode.path("financialData").path("grossMargins").path("raw").floatValue());
+        stock.setEbitdaMargins(resNode.path("financialData").path("ebitdaMargins").path("raw").floatValue());
+        stock.setOperatingMargins(resNode.path("financialData").path("operatingMargins").path("raw").floatValue());
+        stock.setProfitMargins(resNode.path("financialData").path("profitMargins").path("raw").floatValue());
         return stock;
     }
 

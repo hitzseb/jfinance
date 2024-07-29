@@ -34,7 +34,7 @@ public class StockService {
     /**
      * Retrieves stock data based on the provided symbol.
      *
-     * @param symbol the stock symbol
+     * @param symbol the stock symbol to fetch data for (e.g., "AAPL" for Apple Inc.)
      * @return a Stock object containing the stock data
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
@@ -49,7 +49,7 @@ public class StockService {
                 .uri(URI.create(SEARCH_URL + symbol))
                 .build();
 
-        return sender.sendStockRequest(optionsRequest, searchRequest, "yyyy-MM-dd");
+        return sender.sendStockRequest(optionsRequest, searchRequest, "yyyy-MM-dd", symbol);
     }
 
 }

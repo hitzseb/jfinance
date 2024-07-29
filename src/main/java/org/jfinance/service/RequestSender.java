@@ -87,13 +87,16 @@ public class RequestSender {
      *
      * @param optionsRequest the HTTP request for options data
      * @param searchRequest the HTTP request for search data
-     * @return a Stock object if both requests are successful, otherwise null
+     * @param format the date format
+     * @param symbol the stock symbol to fetch data for (e.g., "AAPL" for Apple Inc.)
+     * @return a Stock object if all are successful, otherwise null
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest, String format) throws IOException, InterruptedException {
+    public Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest, String format, String symbol) throws IOException, InterruptedException {
         final HttpResponse<String>[] optionsResponse = new HttpResponse[1];
         final HttpResponse<String>[] searchResponse = new HttpResponse[1];
+        final String[] quoteResponse = new String[1];
 
         // Creating threads to handle requests simultaneously
         Thread optionsThread = new Thread(() -> {
@@ -112,14 +115,24 @@ public class RequestSender {
             }
         });
 
+        Thread quoteThread = new Thread(() -> {
+            try {
+                quoteResponse[0] = DataScrapper.getQuote(symbol);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
         // Starting threads
         optionsThread.start();
         searchThread.start();
+        quoteThread.start();
 
         // Wait for all threads to finish
         try {
             optionsThread.join();
             searchThread.join();
+            quoteThread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
             throw new InterruptedException("Thread execution interrupted");
@@ -127,7 +140,7 @@ public class RequestSender {
 
         // Process the results
         if (optionsResponse[0] != null && searchResponse[0] != null) {
-            return stockMapper.buildStockFromJson(optionsResponse[0].body(), searchResponse[0].body(), format);
+            return stockMapper.buildStockFromJson(optionsResponse[0].body(), searchResponse[0].body(), quoteResponse[0], format);
         }
         return null;
     }

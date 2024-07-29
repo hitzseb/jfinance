@@ -34,7 +34,35 @@ public class Stock {
     private double trailingAnnualDividendRate;
     private double trailingAnnualDividendYield;
     private String earningsTimestamp;
+//    private long sharesOutstanding;
+    private long enterpriseValue;
+    private long floatShares;
     private long sharesOutstanding;
+    private long sharesShort;
+    private double shortRatio;
+    private double shortPercentOfFloat;
+    private long impliedSharesOutstanding;
+    private double netIncomeToCommon;
+    private float pegRatio;
+    private float enterpriseToRevenue;
+    private float enterpriseToEbitda;
+    private String longBusinessSummary;
+    private long totalCash;
+    private long totalDebt;
+    private long totalRevenue;
+    private long ebitda;
+    private float debtToEquity;
+    private float revenuePerShare;
+    private double returnOnAssets;
+    private float returnOnEquity;
+    private long freeCashflow;
+    private long operatingCashflow;
+    private float earningsGrowth;
+    private float revenueGrowth;
+    private float grossMargins;
+    private float ebitdaMargins;
+    private float operatingMargins;
+    private float profitMargins;
 
     public Stock() {
     }
@@ -183,6 +211,14 @@ public class Stock {
         this.fiftyTwoWeekRange = fiftyTwoWeekRange;
     }
 
+    public double getFiftyTwoWeekLow() {
+        return fiftyTwoWeekLow;
+    }
+
+    public void setFiftyTwoWeekLow(double fiftyTwoWeekLow) {
+        this.fiftyTwoWeekLow = fiftyTwoWeekLow;
+    }
+
     public double getFiftyTwoWeekHighChange() {
         return fiftyTwoWeekHighChange;
     }
@@ -197,14 +233,6 @@ public class Stock {
 
     public void setFiftyTwoWeekHighChangePercent(double fiftyTwoWeekHighChangePercent) {
         this.fiftyTwoWeekHighChangePercent = fiftyTwoWeekHighChangePercent;
-    }
-
-    public double getFiftyTwoWeekLow() {
-        return fiftyTwoWeekLow;
-    }
-
-    public void setFiftyTwoWeekLow(double fiftyTwoWeekLow) {
-        this.fiftyTwoWeekLow = fiftyTwoWeekLow;
     }
 
     public double getFiftyTwoWeekHigh() {
@@ -295,12 +323,228 @@ public class Stock {
         this.earningsTimestamp = earningsTimestamp;
     }
 
+    public long getEnterpriseValue() {
+        return enterpriseValue;
+    }
+
+    public void setEnterpriseValue(long enterpriseValue) {
+        this.enterpriseValue = enterpriseValue;
+    }
+
+    public long getFloatShares() {
+        return floatShares;
+    }
+
+    public void setFloatShares(long floatShares) {
+        this.floatShares = floatShares;
+    }
+
     public long getSharesOutstanding() {
         return sharesOutstanding;
     }
 
     public void setSharesOutstanding(long sharesOutstanding) {
         this.sharesOutstanding = sharesOutstanding;
+    }
+
+    public long getSharesShort() {
+        return sharesShort;
+    }
+
+    public void setSharesShort(long sharesShort) {
+        this.sharesShort = sharesShort;
+    }
+
+    public double getShortRatio() {
+        return shortRatio;
+    }
+
+    public void setShortRatio(double shortRatio) {
+        this.shortRatio = shortRatio;
+    }
+
+    public double getShortPercentOfFloat() {
+        return shortPercentOfFloat;
+    }
+
+    public void setShortPercentOfFloat(double shortPercentOfFloat) {
+        this.shortPercentOfFloat = shortPercentOfFloat;
+    }
+
+    public long getImpliedSharesOutstanding() {
+        return impliedSharesOutstanding;
+    }
+
+    public void setImpliedSharesOutstanding(long impliedSharesOutstanding) {
+        this.impliedSharesOutstanding = impliedSharesOutstanding;
+    }
+
+    public double getNetIncomeToCommon() {
+        return netIncomeToCommon;
+    }
+
+    public void setNetIncomeToCommon(double netIncomeToCommon) {
+        this.netIncomeToCommon = netIncomeToCommon;
+    }
+
+    public float getPegRatio() {
+        return pegRatio;
+    }
+
+    public void setPegRatio(float pegRatio) {
+        this.pegRatio = pegRatio;
+    }
+
+    public float getEnterpriseToRevenue() {
+        return enterpriseToRevenue;
+    }
+
+    public void setEnterpriseToRevenue(float enterpriseToRevenue) {
+        this.enterpriseToRevenue = enterpriseToRevenue;
+    }
+
+    public float getEnterpriseToEbitda() {
+        return enterpriseToEbitda;
+    }
+
+    public void setEnterpriseToEbitda(float enterpriseToEbitda) {
+        this.enterpriseToEbitda = enterpriseToEbitda;
+    }
+
+    public String getLongBusinessSummary() {
+        return longBusinessSummary;
+    }
+
+    public void setLongBusinessSummary(String longBusinessSummary) {
+        this.longBusinessSummary = longBusinessSummary;
+    }
+
+    public long getTotalCash() {
+        return totalCash;
+    }
+
+    public void setTotalCash(long totalCash) {
+        this.totalCash = totalCash;
+    }
+
+    public long getTotalDebt() {
+        return totalDebt;
+    }
+
+    public void setTotalDebt(long totalDebt) {
+        this.totalDebt = totalDebt;
+    }
+
+    public long getTotalRevenue() {
+        return totalRevenue;
+    }
+
+    public void setTotalRevenue(long totalRevenue) {
+        this.totalRevenue = totalRevenue;
+    }
+
+    public long getEbitda() {
+        return ebitda;
+    }
+
+    public void setEbitda(long ebitda) {
+        this.ebitda = ebitda;
+    }
+
+    public float getDebtToEquity() {
+        return debtToEquity;
+    }
+
+    public void setDebtToEquity(float debtToEquity) {
+        this.debtToEquity = debtToEquity;
+    }
+
+    public float getRevenuePerShare() {
+        return revenuePerShare;
+    }
+
+    public void setRevenuePerShare(float revenuePerShare) {
+        this.revenuePerShare = revenuePerShare;
+    }
+
+    public double getReturnOnAssets() {
+        return returnOnAssets;
+    }
+
+    public void setReturnOnAssets(double returnOnAssets) {
+        this.returnOnAssets = returnOnAssets;
+    }
+
+    public float getReturnOnEquity() {
+        return returnOnEquity;
+    }
+
+    public void setReturnOnEquity(float returnOnEquity) {
+        this.returnOnEquity = returnOnEquity;
+    }
+
+    public long getFreeCashflow() {
+        return freeCashflow;
+    }
+
+    public void setFreeCashflow(long freeCashflow) {
+        this.freeCashflow = freeCashflow;
+    }
+
+    public long getOperatingCashflow() {
+        return operatingCashflow;
+    }
+
+    public void setOperatingCashflow(long operatingCashflow) {
+        this.operatingCashflow = operatingCashflow;
+    }
+
+    public float getEarningsGrowth() {
+        return earningsGrowth;
+    }
+
+    public void setEarningsGrowth(float earningsGrowth) {
+        this.earningsGrowth = earningsGrowth;
+    }
+
+    public float getRevenueGrowth() {
+        return revenueGrowth;
+    }
+
+    public void setRevenueGrowth(float revenueGrowth) {
+        this.revenueGrowth = revenueGrowth;
+    }
+
+    public float getGrossMargins() {
+        return grossMargins;
+    }
+
+    public void setGrossMargins(float grossMargins) {
+        this.grossMargins = grossMargins;
+    }
+
+    public float getEbitdaMargins() {
+        return ebitdaMargins;
+    }
+
+    public void setEbitdaMargins(float ebitdaMargins) {
+        this.ebitdaMargins = ebitdaMargins;
+    }
+
+    public float getOperatingMargins() {
+        return operatingMargins;
+    }
+
+    public void setOperatingMargins(float operatingMargins) {
+        this.operatingMargins = operatingMargins;
+    }
+
+    public float getProfitMargins() {
+        return profitMargins;
+    }
+
+    public void setProfitMargins(float profitMargins) {
+        this.profitMargins = profitMargins;
     }
 
     @Override
@@ -323,10 +567,10 @@ public class Stock {
                 ", averageDailyVolume10Day=" + averageDailyVolume10Day +
                 ", fiftyTwoWeekLowChange=" + fiftyTwoWeekLowChange +
                 ", fiftyTwoWeekLowChangePercent=" + fiftyTwoWeekLowChangePercent +
-                ", fiftyTwoWeekRange=" + fiftyTwoWeekRange +
+                ", fiftyTwoWeekRange='" + fiftyTwoWeekRange + '\'' +
+                ", fiftyTwoWeekLow=" + fiftyTwoWeekLow +
                 ", fiftyTwoWeekHighChange=" + fiftyTwoWeekHighChange +
                 ", fiftyTwoWeekHighChangePercent=" + fiftyTwoWeekHighChangePercent +
-                ", fiftyTwoWeekLow=" + fiftyTwoWeekLow +
                 ", fiftyTwoWeekHigh=" + fiftyTwoWeekHigh +
                 ", trailingPE=" + trailingPE +
                 ", forwardPE=" + forwardPE +
@@ -338,7 +582,34 @@ public class Stock {
                 ", trailingAnnualDividendRate=" + trailingAnnualDividendRate +
                 ", trailingAnnualDividendYield=" + trailingAnnualDividendYield +
                 ", earningsTimestamp='" + earningsTimestamp + '\'' +
+                ", enterpriseValue=" + enterpriseValue +
+                ", floatShares=" + floatShares +
                 ", sharesOutstanding=" + sharesOutstanding +
+                ", sharesShort=" + sharesShort +
+                ", shortRatio=" + shortRatio +
+                ", shortPercentOfFloat=" + shortPercentOfFloat +
+                ", impliedSharesOutstanding=" + impliedSharesOutstanding +
+                ", netIncomeToCommon=" + netIncomeToCommon +
+                ", pegRatio=" + pegRatio +
+                ", enterpriseToRevenue=" + enterpriseToRevenue +
+                ", enterpriseToEbitda=" + enterpriseToEbitda +
+                ", longBusinessSummary='" + longBusinessSummary + '\'' +
+                ", totalCash=" + totalCash +
+                ", totalDebt=" + totalDebt +
+                ", totalRevenue=" + totalRevenue +
+                ", ebitda=" + ebitda +
+                ", debtToEquity=" + debtToEquity +
+                ", revenuePerShare=" + revenuePerShare +
+                ", returnOnAssets=" + returnOnAssets +
+                ", returnOnEquity=" + returnOnEquity +
+                ", freeCashflow=" + freeCashflow +
+                ", operatingCashflow=" + operatingCashflow +
+                ", earningsGrowth=" + earningsGrowth +
+                ", revenueGrowth=" + revenueGrowth +
+                ", grossMargins=" + grossMargins +
+                ", ebitdaMargins=" + ebitdaMargins +
+                ", operatingMargins=" + operatingMargins +
+                ", profitMargins=" + profitMargins +
                 '}';
     }
 
