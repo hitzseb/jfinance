@@ -10,6 +10,7 @@ public class Stock {
     private String exchange;
     private String currency;
     private String exchangeTimezone;
+    private String longBusinessSummary;
     private double regularMarketPrice;
     private double regularMarketChangePercent;
     private long marketCap;
@@ -34,10 +35,9 @@ public class Stock {
     private double trailingAnnualDividendRate;
     private double trailingAnnualDividendYield;
     private String earningsTimestamp;
-//    private long sharesOutstanding;
+    private long sharesOutstanding;
     private long enterpriseValue;
     private long floatShares;
-    private long sharesOutstanding;
     private long sharesShort;
     private double shortRatio;
     private double shortPercentOfFloat;
@@ -46,7 +46,6 @@ public class Stock {
     private float pegRatio;
     private float enterpriseToRevenue;
     private float enterpriseToEbitda;
-    private String longBusinessSummary;
     private long totalCash;
     private long totalDebt;
     private long totalRevenue;
@@ -129,6 +128,14 @@ public class Stock {
 
     public void setExchangeTimezone(String exchangeTimezone) {
         this.exchangeTimezone = exchangeTimezone;
+    }
+
+    public String getLongBusinessSummary() {
+        return longBusinessSummary;
+    }
+
+    public void setLongBusinessSummary(String longBusinessSummary) {
+        this.longBusinessSummary = longBusinessSummary;
     }
 
     public double getRegularMarketPrice() {
@@ -323,6 +330,14 @@ public class Stock {
         this.earningsTimestamp = earningsTimestamp;
     }
 
+    public long getSharesOutstanding() {
+        return sharesOutstanding;
+    }
+
+    public void setSharesOutstanding(long sharesOutstanding) {
+        this.sharesOutstanding = sharesOutstanding;
+    }
+
     public long getEnterpriseValue() {
         return enterpriseValue;
     }
@@ -337,14 +352,6 @@ public class Stock {
 
     public void setFloatShares(long floatShares) {
         this.floatShares = floatShares;
-    }
-
-    public long getSharesOutstanding() {
-        return sharesOutstanding;
-    }
-
-    public void setSharesOutstanding(long sharesOutstanding) {
-        this.sharesOutstanding = sharesOutstanding;
     }
 
     public long getSharesShort() {
@@ -409,14 +416,6 @@ public class Stock {
 
     public void setEnterpriseToEbitda(float enterpriseToEbitda) {
         this.enterpriseToEbitda = enterpriseToEbitda;
-    }
-
-    public String getLongBusinessSummary() {
-        return longBusinessSummary;
-    }
-
-    public void setLongBusinessSummary(String longBusinessSummary) {
-        this.longBusinessSummary = longBusinessSummary;
     }
 
     public long getTotalCash() {
@@ -558,6 +557,7 @@ public class Stock {
                 ", exchange='" + exchange + '\'' +
                 ", currency='" + currency + '\'' +
                 ", exchangeTimezone='" + exchangeTimezone + '\'' +
+                ", longBusinessSummary='" + longBusinessSummary + '\'' +
                 ", regularMarketPrice=" + regularMarketPrice +
                 ", regularMarketChangePercent=" + regularMarketChangePercent +
                 ", marketCap=" + marketCap +
@@ -582,9 +582,9 @@ public class Stock {
                 ", trailingAnnualDividendRate=" + trailingAnnualDividendRate +
                 ", trailingAnnualDividendYield=" + trailingAnnualDividendYield +
                 ", earningsTimestamp='" + earningsTimestamp + '\'' +
+                ", sharesOutstanding=" + sharesOutstanding +
                 ", enterpriseValue=" + enterpriseValue +
                 ", floatShares=" + floatShares +
-                ", sharesOutstanding=" + sharesOutstanding +
                 ", sharesShort=" + sharesShort +
                 ", shortRatio=" + shortRatio +
                 ", shortPercentOfFloat=" + shortPercentOfFloat +
@@ -593,7 +593,6 @@ public class Stock {
                 ", pegRatio=" + pegRatio +
                 ", enterpriseToRevenue=" + enterpriseToRevenue +
                 ", enterpriseToEbitda=" + enterpriseToEbitda +
-                ", longBusinessSummary='" + longBusinessSummary + '\'' +
                 ", totalCash=" + totalCash +
                 ", totalDebt=" + totalDebt +
                 ", totalRevenue=" + totalRevenue +

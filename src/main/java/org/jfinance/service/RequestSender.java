@@ -12,17 +12,7 @@ import java.net.http.HttpResponse;
 
 public class RequestSender {
 
-    private static final RequestSender instance = new RequestSender();
-
-    private RequestSender() {}
-
-    public static RequestSender getInstance() {
-        return instance;
-    }
-
     private static final HttpClient client = HttpClient.newHttpClient();
-    private static final ChartMapper chartMapper = ChartMapper.getInstance();
-    private static final StockMapper stockMapper = StockMapper.getInstance();
 
     /**
      * Sends an HTTP request and returns the response.
@@ -56,11 +46,11 @@ public class RequestSender {
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public Chart sendChartRequest(HttpRequest request, String format) throws IOException, InterruptedException {
+    public static Chart sendChartRequest(HttpRequest request, String format) throws IOException, InterruptedException {
         HttpResponse<String> response = sendRequest(request);
 
         if (response != null) {
-            return chartMapper.buildChartFromJson(response.body(), format);
+            return ChartMapper.buildChartFromJson(response.body(), format);
         }
         return null;
     }
@@ -73,11 +63,11 @@ public class RequestSender {
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public Chart sendChartRequest(HttpRequest request, String format, String timezone) throws IOException, InterruptedException {
+    public static Chart sendChartRequest(HttpRequest request, String format, String timezone) throws IOException, InterruptedException {
         HttpResponse<String> response = sendRequest(request);
 
         if (response != null) {
-            return chartMapper.buildChartFromJson(response.body(), format, timezone);
+            return ChartMapper.buildChartFromJson(response.body(), format, timezone);
         }
         return null;
     }
@@ -93,7 +83,7 @@ public class RequestSender {
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest, String format, String symbol) throws IOException, InterruptedException {
+    public static Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest, String format, String symbol) throws IOException, InterruptedException {
         final HttpResponse<String>[] optionsResponse = new HttpResponse[1];
         final HttpResponse<String>[] searchResponse = new HttpResponse[1];
         final String[] quoteResponse = new String[1];
@@ -140,7 +130,7 @@ public class RequestSender {
 
         // Process the results
         if (optionsResponse[0] != null && searchResponse[0] != null) {
-            return stockMapper.buildStockFromJson(optionsResponse[0].body(), searchResponse[0].body(), quoteResponse[0], format);
+            return StockMapper.buildStockFromJson(optionsResponse[0].body(), searchResponse[0].body(), quoteResponse[0], format);
         }
         return null;
     }

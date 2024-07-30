@@ -14,17 +14,7 @@ import java.util.List;
  */
 public class ChartMapper {
 
-    private static final ChartMapper instance = new ChartMapper();
-
-    private ChartMapper() {}
-
-    public static ChartMapper getInstance() {
-        return instance;
-    }
-
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final TimestampConverter tsConverter = TimestampConverter.getInstance();
-    private static final JsonConverter jsonConverter = JsonConverter.getInstance();
 
     /**
      * Builds a Chart object from a JSON string.
@@ -34,14 +24,14 @@ public class ChartMapper {
      * @return a Chart object
      * @throws IOException if an I/O exception occurs during JSON parsing
      */
-    public Chart buildChartFromJson(String jsonStr, String format) throws IOException {
+    public static Chart buildChartFromJson(String jsonStr, String format) throws IOException {
         JsonNode rootNode = objectMapper.readTree(jsonStr);
         JsonNode resultNode = rootNode.at("/chart/result/0");
 
         Chart chart = mapMeta(resultNode.at("/meta"));
         List<Long> timestampList = mapTimestampList(resultNode.at("/timestamp"));
         Indicators indicators = mapIndicators(resultNode.at("/indicators"));
-        chart.setTimestamp(tsConverter.convertTimestampsToDates(timestampList, format));
+        chart.setTimestamp(TimestampConverter.convertTimestampsToDates(timestampList, format));
         chart.setIndicators(indicators);
 
         return chart;
@@ -56,14 +46,14 @@ public class ChartMapper {
      * @return a Chart object
      * @throws IOException if an I/O exception occurs during JSON parsing
      */
-    public Chart buildChartFromJson(String jsonStr, String format, String timezone) throws IOException {
+    public static Chart buildChartFromJson(String jsonStr, String format, String timezone) throws IOException {
         JsonNode rootNode = objectMapper.readTree(jsonStr);
         JsonNode resultNode = rootNode.at("/chart/result/0");
 
         Chart chart = mapMeta(resultNode.at("/meta"));
         List<Long> timestampList = mapTimestampList(resultNode.at("/timestamp"));
         Indicators indicators = mapIndicators(resultNode.at("/indicators"));
-        chart.setTimestamp(tsConverter.convertTimestampsToDates(timestampList, format, timezone));
+        chart.setTimestamp(TimestampConverter.convertTimestampsToDates(timestampList, format, timezone));
         chart.setIndicators(indicators);
 
         return chart;
@@ -126,11 +116,11 @@ public class ChartMapper {
     private static List<Quote> mapQuotes(JsonNode quoteNode) {
         List<Quote> quotes = new ArrayList<>();
         Quote quote = new Quote();
-        quote.setOpen(jsonConverter.convertJsonNodeToList(quoteNode.get("open")));
-        quote.setHigh(jsonConverter.convertJsonNodeToList(quoteNode.get("high")));
-        quote.setLow(jsonConverter.convertJsonNodeToList(quoteNode.get("low")));
-        quote.setClose(jsonConverter.convertJsonNodeToList(quoteNode.get("close")));
-        quote.setVolume(jsonConverter.convertJsonNodeToListLong(quoteNode.get("volume")));
+        quote.setOpen(JsonConverter.convertJsonNodeToList(quoteNode.get("open")));
+        quote.setHigh(JsonConverter.convertJsonNodeToList(quoteNode.get("high")));
+        quote.setLow(JsonConverter.convertJsonNodeToList(quoteNode.get("low")));
+        quote.setClose(JsonConverter.convertJsonNodeToList(quoteNode.get("close")));
+        quote.setVolume(JsonConverter.convertJsonNodeToListLong(quoteNode.get("volume")));
         quotes.add(quote);
         return quotes;
     }
@@ -144,7 +134,7 @@ public class ChartMapper {
     private static List<AdjClose> mapAdjCloses(JsonNode adjCloseNode) {
         List<AdjClose> adjCloses = new ArrayList<>();
         AdjClose adjClose = new AdjClose();
-        adjClose.setAdjclose(jsonConverter.convertJsonNodeToList(adjCloseNode.get("adjclose")));
+        adjClose.setAdjclose(JsonConverter.convertJsonNodeToList(adjCloseNode.get("adjclose")));
         adjCloses.add(adjClose);
         return adjCloses;
     }

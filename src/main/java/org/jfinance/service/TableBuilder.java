@@ -10,21 +10,13 @@ import java.util.List;
  */
 public class TableBuilder {
 
-    private static final TableBuilder instance = new TableBuilder();
-
-    private TableBuilder() {}
-
-    public static TableBuilder getInstance() {
-        return instance;
-    }
-
     /**
      * Generates a table based on the given chart data. If adjusted closing prices are available, they are included.
      *
      * @param chart the chart containing the data to include in the table
      * @return the formatted table as a string
      */
-    public String buildFromChart(Chart chart) {
+    public static String buildFromChart(Chart chart) {
         if (isEmpty(chart)) {
             return "Chart has no data to show.";
         }

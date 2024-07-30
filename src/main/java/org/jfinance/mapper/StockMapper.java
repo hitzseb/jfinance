@@ -13,16 +13,7 @@ import java.io.IOException;
  */
 public class StockMapper {
 
-    private static final StockMapper instance = new StockMapper();
-
-    private StockMapper() {}
-
-    public static StockMapper getInstance() {
-        return instance;
-    }
-
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final TimestampConverter tsConverter = TimestampConverter.getInstance();
 
     /**
      * Builds a Stock object from JSON strings representing options data, search data, and quote data.
@@ -34,7 +25,7 @@ public class StockMapper {
      * @return a Stock object
      * @throws IOException if an I/O exception occurs during JSON parsing
      */
-    public Stock buildStockFromJson(String optionsJsonStr, String searchJsonStr, String quoteJson, String format) throws IOException {
+    public static Stock buildStockFromJson(String optionsJsonStr, String searchJsonStr, String quoteJson, String format) throws IOException {
         JsonNode optionsNode = getOptionsNode(optionsJsonStr);
         JsonNode searchNode = getSearchNode(searchJsonStr);
         JsonNode bodyNode = getBodyNode(quoteJson);
@@ -147,11 +138,11 @@ public class StockMapper {
         stock.setEpsForward(optionsNode.get("epsForward").asDouble());
         stock.setPriceEpsCurrentYear(optionsNode.get("priceEpsCurrentYear").asDouble());
         Long dividendDate = optionsNode.get("dividendDate").asLong();
-        stock.setDividendDate(tsConverter.convertTimestampToDate(dividendDate, format));
+        stock.setDividendDate(TimestampConverter.convertTimestampToDate(dividendDate, format));
         stock.setTrailingAnnualDividendRate(optionsNode.get("trailingAnnualDividendRate").asDouble());
         stock.setTrailingAnnualDividendYield(optionsNode.get("trailingAnnualDividendYield").asDouble());
         Long earningsTimestamp = optionsNode.get("earningsTimestamp").asLong();
-        stock.setEarningsTimestamp(tsConverter.convertTimestampToDate(earningsTimestamp, format));
+        stock.setEarningsTimestamp(TimestampConverter.convertTimestampToDate(earningsTimestamp, format));
         stock.setEnterpriseValue(dfkNode.path("enterpriseValue").path("raw").asLong());
         stock.setFloatShares(dfkNode.path("floatShares").path("raw").asLong());
         stock.setSharesOutstanding(dfkNode.path("sharesOutstanding").path("raw").asLong());

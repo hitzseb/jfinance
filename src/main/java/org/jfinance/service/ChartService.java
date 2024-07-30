@@ -13,17 +13,6 @@ import java.util.List;
  */
 public class ChartService {
 
-    private static final ChartService instance = new ChartService();
-
-    private ChartService() {};
-
-    public static ChartService getInstance() {
-        return instance;
-    }
-
-    private static final TimestampConverter tsConverter = TimestampConverter.getInstance();
-    private static final RequestSender sender = RequestSender.getInstance();
-
     /**
      * List of valid intervals for chart queries.
      */
@@ -55,7 +44,7 @@ public class ChartService {
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public Chart getChartByRange(String symbol, String interval, String range) throws IOException, InterruptedException {
+    public static Chart getChartByRange(String symbol, String interval, String range) throws IOException, InterruptedException {
         if (interval == null || interval.isEmpty() || !VALID_INTERVALS.contains(interval)) {
             interval = "1d";  // default interval value
         }
@@ -67,7 +56,7 @@ public class ChartService {
 
         HttpRequest request = buildRequest(symbol, interval, range);
 
-        return sender.sendChartRequest(request, format);
+        return RequestSender.sendChartRequest(request, format);
     }
 
     /**
@@ -81,7 +70,7 @@ public class ChartService {
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public Chart getChartByRange(String symbol, String interval, String range, String timezone) throws IOException, InterruptedException {
+    public static Chart getChartByRange(String symbol, String interval, String range, String timezone) throws IOException, InterruptedException {
         if (interval == null || interval.isEmpty() || !VALID_INTERVALS.contains(interval)) {
             interval = "1d";  // default interval value
         }
@@ -93,7 +82,7 @@ public class ChartService {
 
         HttpRequest request = buildRequest(symbol, interval, range);
 
-        return sender.sendChartRequest(request, format, timezone);
+        return RequestSender.sendChartRequest(request, format, timezone);
     }
 
     /**
@@ -107,19 +96,19 @@ public class ChartService {
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public Chart getChartByPeriod(String symbol, String interval, String period1, String period2) throws IOException, InterruptedException {
+    public static Chart getChartByPeriod(String symbol, String interval, String period1, String period2) throws IOException, InterruptedException {
         if (interval == null || interval.isEmpty() || !VALID_INTERVALS.contains(interval)) {
             interval = "1d";  // default interval value
         }
 
-        long period1Timestamp = tsConverter.convertDateToTimestamp(period1);
-        long period2Timestamp = tsConverter.convertDateToTimestamp(period2);
+        long period1Timestamp = TimestampConverter.convertDateToTimestamp(period1);
+        long period2Timestamp = TimestampConverter.convertDateToTimestamp(period2);
 
         String format = getFormat(interval);
 
         HttpRequest request = buildRequest(symbol, interval, period1Timestamp, period2Timestamp);
 
-        return sender.sendChartRequest(request, format);
+        return RequestSender.sendChartRequest(request, format);
     }
 
     /**
@@ -134,19 +123,19 @@ public class ChartService {
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public Chart getChartByPeriod(String symbol, String interval, String period1, String period2, String timezone) throws IOException, InterruptedException {
+    public static Chart getChartByPeriod(String symbol, String interval, String period1, String period2, String timezone) throws IOException, InterruptedException {
         if (interval == null || interval.isEmpty() || !VALID_INTERVALS.contains(interval)) {
             interval = "1d";  // default interval value
         }
 
-        long period1Timestamp = tsConverter.convertDateToTimestamp(period1);
-        long period2Timestamp = tsConverter.convertDateToTimestamp(period2);
+        long period1Timestamp = TimestampConverter.convertDateToTimestamp(period1);
+        long period2Timestamp = TimestampConverter.convertDateToTimestamp(period2);
 
         String format = getFormat(interval);
 
         HttpRequest request = buildRequest(symbol, interval, period1Timestamp, period2Timestamp);
 
-        return sender.sendChartRequest(request, format, timezone);
+        return RequestSender.sendChartRequest(request, format, timezone);
     }
 
     /**

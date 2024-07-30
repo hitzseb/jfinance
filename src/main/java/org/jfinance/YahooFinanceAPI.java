@@ -14,10 +14,6 @@ import java.io.IOException;
  */
 public class YahooFinanceAPI {
 
-    private static final StockService stockService = StockService.getInstance();
-    private static final ChartService chartService = ChartService.getInstance();
-    private static final TableBuilder tableBuilder = TableBuilder.getInstance();
-
     /**
      * Retrieves stock data based on the provided stock symbol.
      *
@@ -27,7 +23,7 @@ public class YahooFinanceAPI {
      * @throws InterruptedException if the operation is interrupted
      */
     public static Stock getStock(String symbol) throws IOException, InterruptedException {
-        return stockService.getStock(symbol);
+        return StockService.getStock(symbol);
     }
 
     /**
@@ -43,7 +39,7 @@ public class YahooFinanceAPI {
      * @throws InterruptedException if the operation is interrupted
      */
     public static Chart getChartByPeriod(String symbol, String interval, String period1, String period2) throws IOException, InterruptedException {
-        return chartService.getChartByPeriod(symbol, interval, period1, period2);
+        return ChartService.getChartByPeriod(symbol, interval, period1, period2);
     }
 
     /**
@@ -60,7 +56,7 @@ public class YahooFinanceAPI {
      * @throws InterruptedException if the operation is interrupted
      */
     public static Chart getChartByPeriod(String symbol, String interval, String period1, String period2, String timezone) throws IOException, InterruptedException {
-        return chartService.getChartByPeriod(symbol, interval, period1, period2, timezone);
+        return ChartService.getChartByPeriod(symbol, interval, period1, period2, timezone);
     }
 
     /**
@@ -77,7 +73,7 @@ public class YahooFinanceAPI {
      * @throws InterruptedException if the operation is interrupted
      */
     public static Chart getChartByRange(String symbol, String interval, String range) throws IOException, InterruptedException {
-        return chartService.getChartByRange(symbol, interval, range);
+        return ChartService.getChartByRange(symbol, interval, range);
     }
 
     /**
@@ -95,7 +91,7 @@ public class YahooFinanceAPI {
      * @throws InterruptedException if the operation is interrupted
      */
     public static Chart getChartByRange(String symbol, String interval, String range, String timezone) throws IOException, InterruptedException {
-        return chartService.getChartByRange(symbol, interval, range, timezone);
+        return ChartService.getChartByRange(symbol, interval, range, timezone);
     }
 
     /**
@@ -107,7 +103,7 @@ public class YahooFinanceAPI {
      * @return a string representing the formatted table with chart data
      */
     public static String buildTable(Chart chart) {
-        return tableBuilder.buildFromChart(chart);
+        return TableBuilder.buildFromChart(chart);
     }
 
 }

@@ -21,14 +21,28 @@ public class DataScrapper {
      */
     public static String getQuote(String symbol) throws IOException {
         String url = "https://finance.yahoo.com/quote/" + symbol;
-        Document doc = Jsoup.connect(url).get();
+        Document doc;
+
+        try {
+            doc = Jsoup.connect(url).get();
+        } catch (IOException e) {
+            System.err.println("Failed to fetch data from Yahoo Finance for symbol: " + symbol);
+            throw e;
+        }
+
         Elements scriptElements = doc.select("script[data-sveltekit-fetched][data-url]");
         for (Element scriptElement : scriptElements) {
             String dataUrl = scriptElement.attr("data-url");
             if (dataUrl.contains("https://query1.finance.yahoo.com/v10/finance/quoteSummary/")) {
-                return scriptElement.html();
+                String jsonData = scriptElement.html();
+                if (jsonData.isEmpty()) {
+                    System.err.println("No JSON data found in the script tag for symbol: " + symbol);
+                }
+                return jsonData;
             }
         }
+
+        System.err.println("No valid data URL found in the script tags for symbol: " + symbol);
         return "";
     }
 }

@@ -11,9 +11,7 @@ class StockServiceTest {
 
     @Test
     void testGetStock() throws IOException, InterruptedException {
-        String symbol = "AAPL";
-
-        Stock stock = YahooFinanceAPI.getStock(symbol);
+        Stock stock = YahooFinanceAPI.getStock("AAPL");
 
         // Assertions
         assertNotNull(stock);

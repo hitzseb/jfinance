@@ -14,14 +14,6 @@ import java.util.stream.Collectors;
  */
 public class TimestampConverter {
 
-    private static final TimestampConverter instance = new TimestampConverter();
-
-    private TimestampConverter() {}
-
-    public static TimestampConverter getInstance() {
-        return instance;
-    }
-
     private static final String DEFAULT_TIMEZONE = "America/New_York";
 
     /**
@@ -31,7 +23,7 @@ public class TimestampConverter {
      * @param format the date format, e.g., "yyyy-MM-dd"
      * @return the formatted date string
      */
-    public String convertTimestampToDate(Long timestamp, String format) {
+    public static String convertTimestampToDate(Long timestamp, String format) {
         return convertTimestampToDate(timestamp, format, DEFAULT_TIMEZONE);
     }
 
@@ -43,7 +35,7 @@ public class TimestampConverter {
      * @param timezone the time zone to use for conversion
      * @return the formatted date string
      */
-    public String convertTimestampToDate(Long timestamp, String format, String timezone) {
+    public static String convertTimestampToDate(Long timestamp, String format, String timezone) {
         Instant instant = Instant.ofEpochSecond(timestamp);
         ZoneId zoneId = ZoneId.of(timezone);
         ZonedDateTime zonedDateTime = instant.atZone(zoneId);
@@ -58,7 +50,7 @@ public class TimestampConverter {
      * @param format the date format, e.g., "yyyy-MM-dd"
      * @return the list of formatted date strings
      */
-    public List<String> convertTimestampsToDates(List<Long> timestamps, String format) {
+    public static List<String> convertTimestampsToDates(List<Long> timestamps, String format) {
         return convertTimestampsToDates(timestamps, format, DEFAULT_TIMEZONE);
     }
 
@@ -70,7 +62,7 @@ public class TimestampConverter {
      * @param timezone the time zone to use for conversion
      * @return the list of formatted date strings
      */
-    public List<String> convertTimestampsToDates(List<Long> timestamps, String format, String timezone) {
+    public static List<String> convertTimestampsToDates(List<Long> timestamps, String format, String timezone) {
         return timestamps.stream()
                 .map(timestamp -> convertTimestampToDate(timestamp, format, timezone))
                 .collect(Collectors.toList());
@@ -82,7 +74,7 @@ public class TimestampConverter {
      * @param isoDate the date string in ISO format, e.g., "yyyy-MM-dd"
      * @return the timestamp in seconds since epoch, or -1 if parsing fails
      */
-    public long convertDateToTimestamp(String isoDate) {
+    public static long convertDateToTimestamp(String isoDate) {
         return convertDateToTimestamp(isoDate, DEFAULT_TIMEZONE);
     }
 
@@ -93,7 +85,7 @@ public class TimestampConverter {
      * @param timezone the time zone to use for conversion
      * @return the timestamp in seconds since epoch, or -1 if parsing fails
      */
-    public long convertDateToTimestamp(String isoDate, String timezone) {
+    public static long convertDateToTimestamp(String isoDate, String timezone) {
         try {
             LocalDate localDate = LocalDate.parse(isoDate, DateTimeFormatter.ISO_LOCAL_DATE);
             ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.of(timezone));

@@ -10,36 +10,30 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TimestampConverterTest {
 
-    private static final TimestampConverter tsConverter = TimestampConverter.getInstance();
-
-    private final String isoDate1 = "2009-03-10";
-    private final String isoDate2 = "2009-03-11";
-    private final long timestamp1 = 1236657600L;
-    private final long timestamp2 = 1236744000L;
+    private final String isoDate = "2009-03-10";
+    private final long timestamp = 1236657600L;
 
     @Test
     public void testConvertDateToTimestamp() {
-        long expectedTimestamp = timestamp1;
-
-        long actualTimestamp = tsConverter.convertDateToTimestamp(isoDate1);
-        assertEquals(expectedTimestamp, actualTimestamp);
+        long actualTimestamp = TimestampConverter.convertDateToTimestamp(isoDate);
+        assertEquals(timestamp, actualTimestamp);
     }
 
     @Test
     public void testConvertTimestampsToDates() {
-        List<Long> timestamps = Arrays.asList(timestamp1, timestamp2);
-        List<String> expectedDates = Arrays.asList(isoDate1, isoDate2);
+        long timestamp2 = 1236744000L;
+        List<Long> timestamps = Arrays.asList(timestamp, timestamp2);
+        String isoDate2 = "2009-03-11";
+        List<String> expectedDates = Arrays.asList(isoDate, isoDate2);
 
-        List<String> actualDates = tsConverter.convertTimestampsToDates(timestamps, "yyyy-MM-dd");
+        List<String> actualDates = TimestampConverter.convertTimestampsToDates(timestamps, "yyyy-MM-dd");
         assertEquals(expectedDates, actualDates);
     }
 
     @Test
     public void testConvertTimestampToDate() {
-        String expectedDate = isoDate1;
-
-        String actualDate = tsConverter.convertTimestampToDate(timestamp1, "yyyy-MM-dd");
-        assertEquals(expectedDate, actualDate);
+        String actualDate = TimestampConverter.convertTimestampToDate(timestamp, "yyyy-MM-dd");
+        assertEquals(isoDate, actualDate);
     }
 
 }
