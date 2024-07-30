@@ -155,22 +155,25 @@ public class StockMapper {
         stock.setEnterpriseToRevenue(dfkNode.path("enterpriseToRevenue").path("raw").floatValue());
         stock.setEnterpriseToEbitda(dfkNode.path("enterpriseToEbitda").path("raw").floatValue());
         stock.setLongBusinessSummary(resNode.path("summaryProfile").path("longBusinessSummary").asText());
-        stock.setTotalCash(resNode.path("financialData").path("totalCash").path("raw").asLong());
-        stock.setTotalDebt(resNode.path("financialData").path("totalDebt").path("raw").asLong());
-        stock.setTotalRevenue(resNode.path("financialData").path("totalRevenue").path("raw").asLong());
-        stock.setEbitda(resNode.path("financialData").path("ebitda").path("raw").asLong());
-        stock.setDebtToEquity(resNode.path("financialData").path("debtToEquity").path("raw").floatValue());
-        stock.setRevenuePerShare(resNode.path("financialData").path("revenuePerShare").path("raw").floatValue());
-        stock.setReturnOnAssets(resNode.path("financialData").path("returnOnAssets").path("raw").floatValue());
-        stock.setReturnOnEquity(resNode.path("financialData").path("returnOnEquity").path("raw").floatValue());
-        stock.setFreeCashflow(resNode.path("financialData").path("financialData").path("freeCashflow").path("raw").asLong());
-        stock.setOperatingCashflow(resNode.path("financialData").path("operatingCashflow").path("raw").asLong());
-        stock.setEarningsGrowth(resNode.path("financialData").path("earningsGrowth").path("raw").floatValue());
-        stock.setRevenueGrowth(resNode.path("financialData").path("revenueGrowth").path("raw").floatValue());
-        stock.setGrossMargins(resNode.path("financialData").path("grossMargins").path("raw").floatValue());
-        stock.setEbitdaMargins(resNode.path("financialData").path("ebitdaMargins").path("raw").floatValue());
-        stock.setOperatingMargins(resNode.path("financialData").path("operatingMargins").path("raw").floatValue());
-        stock.setProfitMargins(resNode.path("financialData").path("profitMargins").path("raw").floatValue());
+
+        JsonNode financialData = resNode.path("financialData");
+
+        stock.setTotalCash(financialData.path("totalCash").path("raw").asLong());
+        stock.setTotalDebt(financialData.path("totalDebt").path("raw").asLong());
+        stock.setTotalRevenue(financialData.path("totalRevenue").path("raw").asLong());
+        stock.setEbitda(financialData.path("ebitda").path("raw").asLong());
+        stock.setDebtToEquity(financialData.path("debtToEquity").path("raw").floatValue());
+        stock.setRevenuePerShare(financialData.path("revenuePerShare").path("raw").floatValue());
+        stock.setReturnOnAssets(financialData.path("returnOnAssets").path("raw").floatValue());
+        stock.setReturnOnEquity(financialData.path("returnOnEquity").path("raw").floatValue());
+        stock.setFreeCashflow(financialData.path("freeCashflow").path("raw").asLong());
+        stock.setOperatingCashflow(financialData.path("operatingCashflow").path("raw").asLong());
+        stock.setEarningsGrowth(financialData.path("earningsGrowth").path("raw").floatValue());
+        stock.setRevenueGrowth(financialData.path("revenueGrowth").path("raw").floatValue());
+        stock.setGrossMargins(financialData.path("grossMargins").path("raw").floatValue());
+        stock.setEbitdaMargins(financialData.path("ebitdaMargins").path("raw").floatValue());
+        stock.setOperatingMargins(financialData.path("operatingMargins").path("raw").floatValue());
+        stock.setProfitMargins(financialData.path("profitMargins").path("raw").floatValue());
         return stock;
     }
 

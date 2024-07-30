@@ -1,7 +1,11 @@
 ## Jfinance | Yahoo Finance API
 
-A Java library that provides a simple interface to interact with the Yahoo Finance API and retrieve stock data. This library is inspired by the popular `yfinance` library for Python.
+A Java library that provides a simple interface to interact with the Yahoo Finance API and retrieve stock data. This library is inspired by the popular **yfinance** library for Python.
 
+
+### Introduction
+
+**Jfinance** offers an easy way to access Yahoo Finance data using Java. With this library, you can fetch detailed stock information, historical price data, and more. It's designed to simplify the process of integrating financial data into your Java applications.
 
 ### Usage examples
 
@@ -92,3 +96,7 @@ Gradle:
 implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
 implementation 'org.jsoup:jsoup:1.18.1'
 ```
+
+### Contributing
+
+Contributions are welcome. If you find a bug or have a suggestion for an improvement, please open an issue the on repository.
