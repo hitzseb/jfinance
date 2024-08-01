@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.concurrent.CompletableFuture;
 
 public class RequestSender {
 
@@ -79,59 +80,53 @@ public class RequestSender {
      * @param searchRequest the HTTP request for search data
      * @param symbol the stock symbol to fetch data for (e.g., "AAPL" for Apple Inc.)
      * @return a Stock object if all are successful, otherwise null
-     * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public static Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest, String symbol) throws IOException, InterruptedException {
-        final HttpResponse<String>[] optionsResponse = new HttpResponse[1];
-        final HttpResponse<String>[] searchResponse = new HttpResponse[1];
-        final String[] quoteResponse = new String[1];
-
-        // Creating threads to handle requests simultaneously
-        Thread optionsThread = new Thread(() -> {
+    public static Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest, String symbol) throws InterruptedException {
+        CompletableFuture<HttpResponse<String>> optionsFuture = CompletableFuture.supplyAsync(() -> {
             try {
-                optionsResponse[0] = sendRequest(optionsRequest);
+                return sendRequest(optionsRequest);
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
+                return null;
             }
         });
 
-        Thread searchThread = new Thread(() -> {
+        CompletableFuture<HttpResponse<String>> searchFuture = CompletableFuture.supplyAsync(() -> {
             try {
-                searchResponse[0] = sendRequest(searchRequest);
+                return sendRequest(searchRequest);
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
+                return null;
             }
         });
 
-        Thread quoteThread = new Thread(() -> {
+        CompletableFuture<String> quoteFuture = CompletableFuture.supplyAsync(() -> {
             try {
-                quoteResponse[0] = DataScrapper.getQuote(symbol);
+                return DataScrapper.getQuote(symbol);
             } catch (IOException e) {
                 e.printStackTrace();
+                return null;
             }
         });
 
-        // Starting threads
-        optionsThread.start();
-        searchThread.start();
-        quoteThread.start();
+        CompletableFuture<Stock> stockFuture = optionsFuture.thenCombineAsync(searchFuture, (optionsResponse, searchResponse) -> {
+            if (optionsResponse != null && searchResponse != null) {
+                try {
+                    return StockMapper.buildStockFromJson(optionsResponse.body(), searchResponse.body(), quoteFuture.join());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            return null;
+        });
 
-        // Wait for all threads to finish
         try {
-            optionsThread.join();
-            searchThread.join();
-            quoteThread.join();
-        } catch (InterruptedException e) {
+            return stockFuture.join(); // Wait for the combined future to complete and return the stock
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new InterruptedException("Thread execution interrupted");
+            throw new InterruptedException("Execution interrupted while fetching stock data");
         }
-
-        // Process the results
-        if (optionsResponse[0] != null && searchResponse[0] != null) {
-            return StockMapper.buildStockFromJson(optionsResponse[0].body(), searchResponse[0].body(), quoteResponse[0]);
-        }
-        return null;
     }
 
 }
