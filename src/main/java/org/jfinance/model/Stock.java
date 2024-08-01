@@ -110,14 +110,6 @@ public class Stock {
         this.currency = currency;
     }
 
-//    public String getExchangeTimezone() {
-//        return exchangeTimezone;
-//    }
-
-//    public void setExchangeTimezone(String exchangeTimezone) {
-//        this.exchangeTimezone = exchangeTimezone;
-//    }
-
     public String getLongBusinessSummary() {
         return longBusinessSummary;
     }
@@ -165,78 +157,6 @@ public class Stock {
     public void setPriceToBook(double priceToBook) {
         this.priceToBook = priceToBook;
     }
-
-//    public long getAverageDailyVolume3Month() {
-//        return averageDailyVolume3Month;
-//    }
-
-//    public void setAverageDailyVolume3Month(long averageDailyVolume3Month) {
-//        this.averageDailyVolume3Month = averageDailyVolume3Month;
-//    }
-
-//    public long getAverageDailyVolume10Day() {
-//        return averageDailyVolume10Day;
-//    }
-
-//    public void setAverageDailyVolume10Day(long averageDailyVolume10Day) {
-//        this.averageDailyVolume10Day = averageDailyVolume10Day;
-//    }
-
-//    public double getFiftyTwoWeekLowChange() {
-//        return fiftyTwoWeekLowChange;
-//    }
-
-//    public void setFiftyTwoWeekLowChange(double fiftyTwoWeekLowChange) {
-//        this.fiftyTwoWeekLowChange = fiftyTwoWeekLowChange;
-//    }
-
-//    public double getFiftyTwoWeekLowChangePercent() {
-//        return fiftyTwoWeekLowChangePercent;
-//    }
-
-//    public void setFiftyTwoWeekLowChangePercent(double fiftyTwoWeekLowChangePercent) {
-//        this.fiftyTwoWeekLowChangePercent = fiftyTwoWeekLowChangePercent;
-//    }
-
-//    public String getFiftyTwoWeekRange() {
-//        return fiftyTwoWeekRange;
-//    }
-
-//    public void setFiftyTwoWeekRange(String fiftyTwoWeekRange) {
-//        this.fiftyTwoWeekRange = fiftyTwoWeekRange;
-//    }
-
-//    public double getFiftyTwoWeekLow() {
-//        return fiftyTwoWeekLow;
-//    }
-
-//    public void setFiftyTwoWeekLow(double fiftyTwoWeekLow) {
-//        this.fiftyTwoWeekLow = fiftyTwoWeekLow;
-//    }
-
-//    public double getFiftyTwoWeekHighChange() {
-//        return fiftyTwoWeekHighChange;
-//    }
-
-//    public void setFiftyTwoWeekHighChange(double fiftyTwoWeekHighChange) {
-//        this.fiftyTwoWeekHighChange = fiftyTwoWeekHighChange;
-//    }
-//
-//    public double getFiftyTwoWeekHighChangePercent() {
-//        return fiftyTwoWeekHighChangePercent;
-//    }
-//
-//    public void setFiftyTwoWeekHighChangePercent(double fiftyTwoWeekHighChangePercent) {
-//        this.fiftyTwoWeekHighChangePercent = fiftyTwoWeekHighChangePercent;
-//    }
-//
-//    public double getFiftyTwoWeekHigh() {
-//        return fiftyTwoWeekHigh;
-//    }
-
-//    public void setFiftyTwoWeekHigh(double fiftyTwoWeekHigh) {
-//        this.fiftyTwoWeekHigh = fiftyTwoWeekHigh;
-//    }
 
     public double getTrailingPE() {
         return trailingPE;
@@ -286,14 +206,6 @@ public class Stock {
         this.priceEpsCurrentYear = priceEpsCurrentYear;
     }
 
-//    public String getDividendDate() {
-//        return dividendDate;
-//    }
-//
-//    public void setDividendDate(String dividendDate) {
-//        this.dividendDate = dividendDate;
-//    }
-
     public double getTrailingAnnualDividendRate() {
         return trailingAnnualDividendRate;
     }
@@ -309,14 +221,6 @@ public class Stock {
     public void setTrailingAnnualDividendYield(double trailingAnnualDividendYield) {
         this.trailingAnnualDividendYield = trailingAnnualDividendYield;
     }
-
-//    public String getEarningsTimestamp() {
-//        return earningsTimestamp;
-//    }
-//
-//    public void setEarningsTimestamp(String earningsTimestamp) {
-//        this.earningsTimestamp = earningsTimestamp;
-//    }
 
     public long getSharesOutstanding() {
         return sharesOutstanding;
