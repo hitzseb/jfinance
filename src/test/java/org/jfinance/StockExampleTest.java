@@ -8,8 +8,8 @@ public class StockExampleTest {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        Stock stock = YahooFinanceAPI.getStock("AAPL");
-        System.out.println(stock);
+        Stock apple = YahooFinanceAPI.getStock("AAPL");
+        System.out.println(apple);
 
     }
 

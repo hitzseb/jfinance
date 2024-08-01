@@ -6,7 +6,7 @@
 
     <groupId>org.jfinance</groupId>
     <artifactId>yahoo-finance-api</artifactId>
-    <version>0.3.2</version>
+    <version>0.3.3</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

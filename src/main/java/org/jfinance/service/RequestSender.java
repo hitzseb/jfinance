@@ -77,13 +77,12 @@ public class RequestSender {
      *
      * @param optionsRequest the HTTP request for options data
      * @param searchRequest the HTTP request for search data
-     * @param format the date format
      * @param symbol the stock symbol to fetch data for (e.g., "AAPL" for Apple Inc.)
      * @return a Stock object if all are successful, otherwise null
      * @throws IOException if an I/O exception occurs
      * @throws InterruptedException if the operation is interrupted
      */
-    public static Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest, String format, String symbol) throws IOException, InterruptedException {
+    public static Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest, String symbol) throws IOException, InterruptedException {
         final HttpResponse<String>[] optionsResponse = new HttpResponse[1];
         final HttpResponse<String>[] searchResponse = new HttpResponse[1];
         final String[] quoteResponse = new String[1];
@@ -130,7 +129,7 @@ public class RequestSender {
 
         // Process the results
         if (optionsResponse[0] != null && searchResponse[0] != null) {
-            return StockMapper.buildStockFromJson(optionsResponse[0].body(), searchResponse[0].body(), quoteResponse[0], format);
+            return StockMapper.buildStockFromJson(optionsResponse[0].body(), searchResponse[0].body(), quoteResponse[0]);
         }
         return null;
     }

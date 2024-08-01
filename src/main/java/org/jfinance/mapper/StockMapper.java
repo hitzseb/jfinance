@@ -21,18 +21,17 @@ public class StockMapper {
      * @param optionsJsonStr the JSON string representing the options data
      * @param searchJsonStr the JSON string representing the search data
      * @param quoteJson the JSON string representing the quote data
-     * @param format the date format to be used for timestamp conversion
      * @return a Stock object
      * @throws IOException if an I/O exception occurs during JSON parsing
      */
-    public static Stock buildStockFromJson(String optionsJsonStr, String searchJsonStr, String quoteJson, String format) throws IOException {
+    public static Stock buildStockFromJson(String optionsJsonStr, String searchJsonStr, String quoteJson) throws IOException {
         JsonNode optionsNode = getOptionsNode(optionsJsonStr);
         JsonNode searchNode = getSearchNode(searchJsonStr);
         JsonNode bodyNode = getBodyNode(quoteJson);
         JsonNode resNode = getResNode(bodyNode);
         JsonNode dfkNode = getDfkNode(resNode);
 
-        return mapStock(optionsNode, searchNode, resNode, dfkNode, format);
+        return mapStock(optionsNode, searchNode, resNode, dfkNode);
     }
 
     /**
@@ -104,45 +103,28 @@ public class StockMapper {
      * @param searchNode the JSON node representing the search data
      * @param resNode the JSON node representing the result data
      * @param dfkNode the JSON node representing the default key statistics data
-     * @param format the date format to be used for timestamp conversion
      * @return a Stock object
      */
-    private static Stock mapStock(JsonNode optionsNode, JsonNode searchNode, JsonNode resNode, JsonNode dfkNode, String format) {
+    private static Stock mapStock(JsonNode optionsNode, JsonNode searchNode, JsonNode resNode, JsonNode dfkNode) {
         Stock stock = new Stock();
         stock.setSymbol(optionsNode.get("symbol").asText());
         stock.setName(optionsNode.get("longName").asText());
         stock.setType(optionsNode.get("quoteType").asText());
-        stock.setSector(searchNode.get("sector").asText());
-        stock.setIndustry(searchNode.get("industry").asText());
+        stock.setSector(getTextValue(searchNode, "sector"));
+        stock.setIndustry(getTextValue(searchNode, "industry"));
         stock.setExchange(searchNode.get("exchDisp").asText());
         stock.setCurrency(optionsNode.get("currency").asText());
-        stock.setExchangeTimezone(optionsNode.get("exchangeTimezoneName").asText());
         stock.setRegularMarketPrice(optionsNode.get("regularMarketPrice").asDouble());
         stock.setRegularMarketChangePercent(optionsNode.get("regularMarketChangePercent").asDouble());
         stock.setMarketCap(optionsNode.get("marketCap").asLong());
-        stock.setBookValue(optionsNode.get("bookValue").asDouble());
-        stock.setPriceToBook(optionsNode.get("priceToBook").asDouble());
-        stock.setAverageDailyVolume3Month(optionsNode.get("averageDailyVolume3Month").asLong());
-        stock.setAverageDailyVolume10Day(optionsNode.get("averageDailyVolume10Day").asLong());
-        stock.setFiftyTwoWeekLowChange(optionsNode.get("fiftyTwoWeekLowChange").asDouble());
-        stock.setFiftyTwoWeekLowChangePercent(optionsNode.get("fiftyTwoWeekLowChangePercent").asDouble());
-        stock.setFiftyTwoWeekRange(optionsNode.get("fiftyTwoWeekRange").asText());
-        stock.setFiftyTwoWeekHighChange(optionsNode.get("fiftyTwoWeekHighChange").asDouble());
-        stock.setFiftyTwoWeekHighChangePercent(optionsNode.get("fiftyTwoWeekHighChangePercent").asDouble());
-        stock.setFiftyTwoWeekLow(optionsNode.get("fiftyTwoWeekLow").asDouble());
-        stock.setFiftyTwoWeekHigh(optionsNode.get("fiftyTwoWeekHigh").asDouble());
-        stock.setTrailingPE(optionsNode.get("trailingPE").asDouble());
-        stock.setForwardPE(optionsNode.get("forwardPE").asDouble());
-        stock.setEpsTrailingTwelveMonths(optionsNode.get("epsTrailingTwelveMonths").asDouble());
-        stock.setEpsCurrentYear(optionsNode.get("epsCurrentYear").asDouble());
-        stock.setEpsForward(optionsNode.get("epsForward").asDouble());
-        stock.setPriceEpsCurrentYear(optionsNode.get("priceEpsCurrentYear").asDouble());
-        Long dividendDate = optionsNode.get("dividendDate").asLong();
-        stock.setDividendDate(TimestampConverter.convertTimestampToDate(dividendDate, format));
-        stock.setTrailingAnnualDividendRate(optionsNode.get("trailingAnnualDividendRate").asDouble());
-        stock.setTrailingAnnualDividendYield(optionsNode.get("trailingAnnualDividendYield").asDouble());
-        Long earningsTimestamp = optionsNode.get("earningsTimestamp").asLong();
-        stock.setEarningsTimestamp(TimestampConverter.convertTimestampToDate(earningsTimestamp, format));
+        stock.setBookValue(getDoubleValue(optionsNode, "bookValue"));
+        stock.setPriceToBook(getDoubleValue(optionsNode, "priceToBook"));
+        stock.setPriceToBook(getDoubleValue(optionsNode, "trailingPE"));
+        stock.setTrailingPE(getDoubleValue(optionsNode, "forwardPE"));
+        stock.setForwardPE(getDoubleValue(optionsNode, "epsTrailingTwelveMonths"));
+        stock.setEpsTrailingTwelveMonths(getDoubleValue(optionsNode, "epsCurrentYear"));
+        stock.setEpsCurrentYear(getDoubleValue(optionsNode, "epsForward"));
+        stock.setEpsForward(getDoubleValue(optionsNode, "priceEpsCurrentYear"));
         stock.setEnterpriseValue(dfkNode.path("enterpriseValue").path("raw").asLong());
         stock.setFloatShares(dfkNode.path("floatShares").path("raw").asLong());
         stock.setSharesOutstanding(dfkNode.path("sharesOutstanding").path("raw").asLong());
@@ -157,7 +139,6 @@ public class StockMapper {
         stock.setLongBusinessSummary(resNode.path("summaryProfile").path("longBusinessSummary").asText());
 
         JsonNode financialData = resNode.path("financialData");
-
         stock.setTotalCash(financialData.path("totalCash").path("raw").asLong());
         stock.setTotalDebt(financialData.path("totalDebt").path("raw").asLong());
         stock.setTotalRevenue(financialData.path("totalRevenue").path("raw").asLong());
@@ -175,6 +156,14 @@ public class StockMapper {
         stock.setOperatingMargins(financialData.path("operatingMargins").path("raw").floatValue());
         stock.setProfitMargins(financialData.path("profitMargins").path("raw").floatValue());
         return stock;
+    }
+
+    private static String getTextValue(JsonNode node, String fieldName) {
+        return node.has(fieldName) && !node.get(fieldName).isNull() ? node.get(fieldName).asText() : null;
+    }
+
+    private static Double getDoubleValue(JsonNode node, String fieldName) {
+        return node.has(fieldName) && !node.get(fieldName).isNull() ? node.get(fieldName).asDouble() : Double.NaN;
     }
 
 }
