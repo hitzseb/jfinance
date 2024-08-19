@@ -7,6 +7,8 @@ import org.jfinance.service.StockService;
 import org.jfinance.service.TableBuilder;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Provides a unified interface for interacting with Yahoo Finance API services.
@@ -24,6 +26,19 @@ public class YahooFinanceAPI {
      */
     public static Stock getStock(String symbol) throws IOException, InterruptedException {
         return StockService.getStock(symbol);
+    }
+
+    /**
+     * Retrieves a list of stocks based on the provided list of symbols.
+     * This method fetches the stock data concurrently for each symbol using
+     * {@link CompletableFuture} to improve performance.
+     *
+     * @param symbols a list of stock symbols to fetch data for (e.g., "AAPL", "MSFT", "GOOGL")
+     * @return a list of {@link Stock} objects containing the stock data
+     * @throws RuntimeException if an I/O exception or interruption occurs during data retrieval
+     */
+    public static List<Stock> getStocks(List<String> symbols) {
+        return StockService.getStocks(symbols);
     }
 
     /**
