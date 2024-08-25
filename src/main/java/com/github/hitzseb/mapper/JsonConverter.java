@@ -1,4 +1,4 @@
-package org.jfinance.mapper;
+package com.github.hitzseb.mapper;
 
 import com.fasterxml.jackson.databind.JsonNode;
 

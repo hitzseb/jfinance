@@ -1,6 +1,6 @@
-package org.jfinance;
+package com.github.hitzseb;
 
-import org.jfinance.service.TimestampConverter;
+import com.github.hitzseb.service.TimestampConverter;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

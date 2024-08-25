@@ -1,6 +1,6 @@
-package org.jfinance;
+package com.github.hitzseb;
 
-import org.jfinance.model.Stock;
+import com.github.hitzseb.model.Stock;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ class StockServiceTest {
         // Assertions
         assertNotNull(stock);
         assertNotNull(stock.getName());
-        assertNotNull(stock.getExchange());
+        assertNotNull(stock.getExchangeName());
     }
 
 }

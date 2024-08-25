@@ -1,4 +1,4 @@
-package org.jfinance.model;
+package com.github.hitzseb.model;
 
 public class Stock {
 
@@ -7,7 +7,7 @@ public class Stock {
     private String type;
     private String sector;
     private String industry;
-    private String exchange;
+    private String exchangeName;
     private String currency;
     private String longBusinessSummary;
     private double regularMarketPrice;
@@ -17,12 +17,9 @@ public class Stock {
     private double priceToBook;
     private double trailingPE;
     private double forwardPE;
-    private double epsTrailingTwelveMonths;
-    private double epsCurrentYear;
-    private double epsForward;
-    private double priceEpsCurrentYear;
-    private double trailingAnnualDividendRate;
-    private double trailingAnnualDividendYield;
+    private double trailingEps;
+    private double forwardEps;
+    private double dividendYield;
     private long sharesOutstanding;
     private long enterpriseValue;
     private long floatShares;
@@ -94,12 +91,12 @@ public class Stock {
         this.industry = industry;
     }
 
-    public String getExchange() {
-        return exchange;
+    public String getExchangeName() {
+        return exchangeName;
     }
 
-    public void setExchange(String exchange) {
-        this.exchange = exchange;
+    public void setExchangeName(String exchange) {
+        this.exchangeName = exchange;
     }
 
     public String getCurrency() {
@@ -174,52 +171,28 @@ public class Stock {
         this.forwardPE = forwardPE;
     }
 
-    public double getEpsTrailingTwelveMonths() {
-        return epsTrailingTwelveMonths;
+    public double getTrailingEps() {
+        return trailingEps;
     }
 
-    public void setEpsTrailingTwelveMonths(double epsTrailingTwelveMonths) {
-        this.epsTrailingTwelveMonths = epsTrailingTwelveMonths;
+    public void setTrailingEps(double trailingEps) {
+        this.trailingEps = trailingEps;
     }
 
-    public double getEpsCurrentYear() {
-        return epsCurrentYear;
+    public double getForwardEps() {
+        return forwardEps;
     }
 
-    public void setEpsCurrentYear(double epsCurrentYear) {
-        this.epsCurrentYear = epsCurrentYear;
+    public void setForwardEps(double forwardEps) {
+        this.forwardEps = forwardEps;
     }
 
-    public double getEpsForward() {
-        return epsForward;
+    public double getDividendYield() {
+        return dividendYield;
     }
 
-    public void setEpsForward(double epsForward) {
-        this.epsForward = epsForward;
-    }
-
-    public double getPriceEpsCurrentYear() {
-        return priceEpsCurrentYear;
-    }
-
-    public void setPriceEpsCurrentYear(double priceEpsCurrentYear) {
-        this.priceEpsCurrentYear = priceEpsCurrentYear;
-    }
-
-    public double getTrailingAnnualDividendRate() {
-        return trailingAnnualDividendRate;
-    }
-
-    public void setTrailingAnnualDividendRate(double trailingAnnualDividendRate) {
-        this.trailingAnnualDividendRate = trailingAnnualDividendRate;
-    }
-
-    public double getTrailingAnnualDividendYield() {
-        return trailingAnnualDividendYield;
-    }
-
-    public void setTrailingAnnualDividendYield(double trailingAnnualDividendYield) {
-        this.trailingAnnualDividendYield = trailingAnnualDividendYield;
+    public void setDividendYield(double dividendYield) {
+        this.dividendYield = dividendYield;
     }
 
     public long getSharesOutstanding() {
@@ -446,7 +419,7 @@ public class Stock {
                 ", type='" + type + '\'' +
                 ", sector='" + sector + '\'' +
                 ", industry='" + industry + '\'' +
-                ", exchange='" + exchange + '\'' +
+                ", exchangeName='" + exchangeName + '\'' +
                 ", currency='" + currency + '\'' +
                 ", longBusinessSummary='" + longBusinessSummary + '\'' +
                 ", regularMarketPrice=" + regularMarketPrice +
@@ -456,12 +429,9 @@ public class Stock {
                 ", priceToBook=" + priceToBook +
                 ", trailingPE=" + trailingPE +
                 ", forwardPE=" + forwardPE +
-                ", epsTrailingTwelveMonths=" + epsTrailingTwelveMonths +
-                ", epsCurrentYear=" + epsCurrentYear +
-                ", epsForward=" + epsForward +
-                ", priceEpsCurrentYear=" + priceEpsCurrentYear +
-                ", trailingAnnualDividendRate=" + trailingAnnualDividendRate +
-                ", trailingAnnualDividendYield=" + trailingAnnualDividendYield +
+                ", trailingEps=" + trailingEps +
+                ", forwardEps=" + forwardEps +
+                ", dividendYield=" + dividendYield +
                 ", sharesOutstanding=" + sharesOutstanding +
                 ", enterpriseValue=" + enterpriseValue +
                 ", floatShares=" + floatShares +

@@ -1,10 +1,8 @@
-package org.jfinance.service;
+package com.github.hitzseb.service;
 
-import org.jfinance.model.Stock;
+import com.github.hitzseb.model.Stock;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -15,16 +13,6 @@ import java.util.stream.Collectors;
 public class StockService {
 
     /**
-     * Base URL for options data requests.
-     */
-    private static final String OPTIONS_URL = "https://query1.finance.yahoo.com/v6/finance/options/";
-
-    /**
-     * Base URL for search data requests.
-     */
-    private static final String SEARCH_URL = "https://query1.finance.yahoo.com/v1/finance/search?q=";
-
-    /**
      * Retrieves stock data based on the provided symbol.
      *
      * @param symbol the stock symbol to fetch data for (e.g., "AAPL" for Apple Inc.)
@@ -33,16 +21,7 @@ public class StockService {
      * @throws InterruptedException if the operation is interrupted
      */
     public static Stock getStock(String symbol) throws IOException, InterruptedException {
-
-        HttpRequest optionsRequest = HttpRequest.newBuilder()
-                .uri(URI.create(OPTIONS_URL + symbol))
-                .build();
-
-        HttpRequest searchRequest = HttpRequest.newBuilder()
-                .uri(URI.create(SEARCH_URL + symbol))
-                .build();
-
-        return RequestSender.sendStockRequest(optionsRequest, searchRequest, symbol);
+        return RequestSender.sendStockRequest(symbol);
     }
 
     /**

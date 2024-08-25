@@ -1,10 +1,10 @@
-package org.jfinance;
+package com.github.hitzseb;
 
-import org.jfinance.model.Chart;
-import org.jfinance.model.Stock;
-import org.jfinance.service.ChartService;
-import org.jfinance.service.StockService;
-import org.jfinance.service.TableBuilder;
+import com.github.hitzseb.model.Chart;
+import com.github.hitzseb.model.Stock;
+import com.github.hitzseb.service.ChartService;
+import com.github.hitzseb.service.StockService;
+import com.github.hitzseb.service.TableBuilder;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.jfinance.model;
+package com.github.hitzseb.model;
 
 import java.util.List;
 

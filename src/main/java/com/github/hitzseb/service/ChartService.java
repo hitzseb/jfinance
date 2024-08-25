@@ -1,6 +1,6 @@
-package org.jfinance.service;
+package com.github.hitzseb.service;
 
-import org.jfinance.model.Chart;
+import com.github.hitzseb.model.Chart;
 
 import java.io.IOException;
 import java.net.URI;

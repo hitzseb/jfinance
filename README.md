@@ -1,4 +1,4 @@
-## Jfinance | Yahoo Finance API
+## Jfinance
 
 A Java library that provides a simple interface to interact with the Yahoo Finance API and retrieve stock data. This library is inspired by the popular **yfinance** library for Python.
 
@@ -17,7 +17,7 @@ System.out.println(stock);
 ```
 Example output:
 ```
-Stock{symbol='AAPL', name='Apple Inc.', type='EQUITY', sector='Technology', industry='Consumer Electronics', exchange='NASDAQ', currency='USD', longBusinessSummary='Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. The company offers iPhone, a line of smartphones; Mac, a line of personal computers; iPad, a line of multi-purpose tablets; and wearables, home, and accessories comprising AirPods, Apple TV, Apple Watch, Beats products, and HomePod. It also provides AppleCare support and cloud services; and operates various platforms, including the App Store that allow customers to discover and download applications and digital content, such as books, music, video, games, and podcasts. In addition, the company offers various services, such as Apple Arcade, a game subscription service; Apple Fitness+, a personalized fitness service; Apple Music, which offers users a curated listening experience with on-demand radio stations; Apple News+, a subscription news and magazine service; Apple TV+, which offers exclusive original content; Apple Card, a co-branded credit card; and Apple Pay, a cashless payment service, as well as licenses its intellectual property. The company serves consumers, and small and mid-sized businesses; and the education, enterprise, and government markets. It distributes third-party applications for its products through the App Store. The company also sells its products through its retail and online stores, and direct sales force; and third-party cellular network carriers, wholesalers, retailers, and resellers. Apple Inc. was founded in 1976 and is headquartered in Cupertino, California.', regularMarketPrice=222.08, regularMarketChangePercent=1.4990853, marketCap=3405396836352, bookValue=4.837, priceToBook=34.538105, trailingPE=30.29741, forwardPE=6.43, epsTrailingTwelveMonths=6.62, epsCurrentYear=7.33, epsForward=33.54683, priceEpsCurrentYear=0.0, trailingAnnualDividendRate=0.0, trailingAnnualDividendYield=0.0, sharesOutstanding=15334099968, enterpriseValue=3392537100288, floatShares=15309394128, sharesShort=135383184, shortRatio=1.83, shortPercentOfFloat=0.0088, impliedSharesOutstanding=15410899968, netIncomeToCommon=1.00389003264E11, pegRatio=2.98, enterpriseToRevenue=8.89, enterpriseToEbitda=26.171, totalCash=67150000128, totalDebt=104590000128, totalRevenue=381623009280, ebitda=129629003776, debtToEquity=140.968, revenuePerShare=24.537, returnOnAssets=0.22073999047279358, returnOnEquity=1.4725, freeCashflow=84726874112, operatingCashflow=110563000320, earningsGrowth=0.007, revenueGrowth=-0.043, grossMargins=0.45586, ebitdaMargins=0.33968, operatingMargins=0.30743, profitMargins=0.26306}
+Stock{symbol='AAPL', name='Apple Inc.', type='EQUITY', sector='Technology', industry='Consumer Electronics', exchangeName='NasdaqGS', currency='USD', longBusinessSummary='Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. The company offers iPhone, a line of smartphones; Mac, a line of personal computers; iPad, a line of multi-purpose tablets; and wearables, home, and accessories comprising AirPods, Apple TV, Apple Watch, Beats products, and HomePod. It also provides AppleCare support and cloud services; and operates various platforms, including the App Store that allow customers to discover and download applications and digital content, such as books, music, video, games, and podcasts. In addition, the company offers various services, such as Apple Arcade, a game subscription service; Apple Fitness+, a personalized fitness service; Apple Music, which offers users a curated listening experience with on-demand radio stations; Apple News+, a subscription news and magazine service; Apple TV+, which offers exclusive original content; Apple Card, a co-branded credit card; and Apple Pay, a cashless payment service, as well as licenses its intellectual property. The company serves consumers, and small and mid-sized businesses; and the education, enterprise, and government markets. It distributes third-party applications for its products through the App Store. The company also sells its products through its retail and online stores, and direct sales force; and third-party cellular network carriers, wholesalers, retailers, and resellers. Apple Inc. was founded in 1976 and is headquartered in Cupertino, California.', regularMarketPrice=226.84, regularMarketChangePercent=0.010288146, marketCap=3448898060288, bookValue=4.382, priceToBook=51.766315, trailingPE=34.474163, forwardPE=30.326202, trailingEps=6.58, forwardEps=7.48, dividendYield=0.0044, sharesOutstanding=15204100096, enterpriseValue=3488409452544, floatShares=15179810381, sharesShort=117696224, shortRatio=2.25, shortPercentOfFloat=0.0077, impliedSharesOutstanding=15410899968, netIncomeToCommon=1.01956001792E11, pegRatio=3.02, enterpriseToRevenue=9.047, enterpriseToEbitda=26.471, totalCash=61801000960, totalDebt=101304000512, totalRevenue=385603010560, ebitda=131781001216, debtToEquity=151.862, revenuePerShare=24.957, returnOnAssets=0.2261199951171875, returnOnEquity=1.60583, freeCashflow=86158123008, operatingCashflow=113040998400, earningsGrowth=0.111, revenueGrowth=0.049, grossMargins=0.45962003, ebitdaMargins=0.34175, operatingMargins=0.29556, profitMargins=0.26441}
 ```
 
 Retrieve detailed information about multiple stocks concurrently:
@@ -30,13 +30,13 @@ stocks.forEach(stock -> System.out.println("Stock: " + stock.getSymbol() + ", Ma
 ```
 Example output:
 ```
-Stock: AAPL, Market Cap: 3436886884352
-Stock: MSFT, Market Cap: 3110504235008
-Stock: NVDA, Market Cap: 3064456282112
-Stock: GOOGL, Market Cap: 2015978323968
-Stock: AMZN, Market Cap: 1858350874624
-Stock: META, Market Cap: 1334277570560
-Stock: TSLA, Market Cap: 690425561088
+Stock: AAPL, Market Cap: 3448898060288
+Stock: NVDA, Market Cap: 3182282145792
+Stock: MSFT, Market Cap: 3098016743424
+Stock: GOOGL, Market Cap: 2048884998144
+Stock: AMZN, Market Cap: 1858140897280
+Stock: META, Market Cap: 1335744921600
+Stock: TSLA, Market Cap: 703843074048
 ```
 
 Retrieve historical price data for a stock in a specified period. The expected arguments are:

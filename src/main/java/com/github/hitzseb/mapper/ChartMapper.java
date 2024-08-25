@@ -1,9 +1,12 @@
-package org.jfinance.mapper;
+package com.github.hitzseb.mapper;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jfinance.model.*;
-import org.jfinance.service.TimestampConverter;
+import com.github.hitzseb.model.AdjClose;
+import com.github.hitzseb.model.Chart;
+import com.github.hitzseb.model.Indicators;
+import com.github.hitzseb.model.Quote;
+import com.github.hitzseb.service.TimestampConverter;
 
 import java.io.IOException;
 import java.util.ArrayList;

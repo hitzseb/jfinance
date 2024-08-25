@@ -1,4 +1,4 @@
-package org.jfinance.service;
+package com.github.hitzseb.service;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

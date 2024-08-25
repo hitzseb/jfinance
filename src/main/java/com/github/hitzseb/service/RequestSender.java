@@ -1,15 +1,14 @@
-package org.jfinance.service;
+package com.github.hitzseb.service;
 
-import org.jfinance.mapper.ChartMapper;
-import org.jfinance.model.Chart;
-import org.jfinance.mapper.StockMapper;
-import org.jfinance.model.Stock;
+import com.github.hitzseb.mapper.ChartMapper;
+import com.github.hitzseb.model.Chart;
+import com.github.hitzseb.mapper.StockMapper;
+import com.github.hitzseb.model.Stock;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.concurrent.CompletableFuture;
 
 public class RequestSender {
 
@@ -74,59 +73,15 @@ public class RequestSender {
     }
 
     /**
-     * Sends HTTP requests to obtain stock data.
+     * Sends a request to obtain stock data for a given symbol by scraping data from Yahoo Finance.
+     * This method does not perform an HTTP request but instead scrapes data using Jsoup, as the
+     * required data is no longer available through the public API.
      *
-     * @param optionsRequest the HTTP request for options data
-     * @param searchRequest the HTTP request for search data
      * @param symbol the stock symbol to fetch data for (e.g., "AAPL" for Apple Inc.)
-     * @return a Stock object if all are successful, otherwise null
-     * @throws InterruptedException if the operation is interrupted
-     */
-    public static Stock sendStockRequest(HttpRequest optionsRequest, HttpRequest searchRequest, String symbol) throws InterruptedException {
-        CompletableFuture<HttpResponse<String>> optionsFuture = CompletableFuture.supplyAsync(() -> {
-            try {
-                return sendRequest(optionsRequest);
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-                return null;
-            }
-        });
-
-        CompletableFuture<HttpResponse<String>> searchFuture = CompletableFuture.supplyAsync(() -> {
-            try {
-                return sendRequest(searchRequest);
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-                return null;
-            }
-        });
-
-        CompletableFuture<String> quoteFuture = CompletableFuture.supplyAsync(() -> {
-            try {
-                return DataScrapper.getQuote(symbol);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        });
-
-        CompletableFuture<Stock> stockFuture = optionsFuture.thenCombineAsync(searchFuture, (optionsResponse, searchResponse) -> {
-            if (optionsResponse != null && searchResponse != null) {
-                try {
-                    return StockMapper.buildStockFromJson(optionsResponse.body(), searchResponse.body(), quoteFuture.join());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            return null;
-        });
-
-        try {
-            return stockFuture.join(); // Wait for the combined future to complete and return the stock
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new InterruptedException("Execution interrupted while fetching stock data");
-        }
+     * @return a Stock object containing the scraped data, or null if the data could not be obtained
+     * @throws IOException if an I/O exception occurs during the scraping process
+     */ static Stock sendStockRequest(String symbol) throws IOException {
+        return StockMapper.buildStockFromJson(DataScrapper.getQuote(symbol));
     }
 
 }

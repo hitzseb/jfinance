@@ -1,7 +1,7 @@
-package org.jfinance.service;
+package com.github.hitzseb.service;
 
-import org.jfinance.model.Chart;
-import org.jfinance.model.Indicators;
+import com.github.hitzseb.model.Chart;
+import com.github.hitzseb.model.Indicators;
 
 import java.util.List;
 

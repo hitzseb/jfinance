@@ -1,4 +1,4 @@
-package org.jfinance.service;
+package com.github.hitzseb.service;
 
 import java.time.Instant;
 import java.time.LocalDate;

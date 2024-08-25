@@ -1,6 +1,6 @@
-package org.jfinance;
+package com.github.hitzseb;
 
-import org.jfinance.model.Chart;
+import com.github.hitzseb.model.Chart;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
