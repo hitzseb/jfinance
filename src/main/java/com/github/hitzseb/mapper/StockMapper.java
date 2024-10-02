@@ -34,30 +34,6 @@ public class StockMapper {
     }
 
     /**
-     * Extracts the options node from the JSON string.
-     *
-     * @param jsonStr the JSON string representing the options data
-     * @return the JSON node representing the options data
-     * @throws IOException if an I/O exception occurs during JSON parsing
-     */
-    private static JsonNode getOptionsNode(String jsonStr) throws IOException {
-        JsonNode rootNode = objectMapper.readTree(jsonStr);
-        return rootNode.at("/optionChain/result/0/quote");
-    }
-
-    /**
-     * Extracts the search node from the JSON string.
-     *
-     * @param jsonStr the JSON string representing the search data
-     * @return the JSON node representing the search data
-     * @throws IOException if an I/O exception occurs during JSON parsing
-     */
-    private static JsonNode getSearchNode(String jsonStr) throws IOException {
-        JsonNode rootNode = objectMapper.readTree(jsonStr);
-        return rootNode.at("/quotes/0");
-    }
-
-    /**
      * Extracts the body node from the JSON string.
      *
      * @param jsonStr the JSON string representing the quote data

@@ -121,4 +121,4 @@ implementation 'org.jsoup:jsoup:1.18.1'
 
 ### Contributing
 
-Contributions are welcome. If you find a bug or have a suggestion for an improvement, please open an issue the on repository.
+Contributions are welcome. If you find a bug or have a suggestion for an improvement, please open an issue.

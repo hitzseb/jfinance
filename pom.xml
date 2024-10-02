@@ -6,7 +6,7 @@
 
     <groupId>com.github.hitzseb</groupId>
     <artifactId>jfinance</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
