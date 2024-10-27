@@ -3,6 +3,8 @@ package com.github.hitzseb;
 import com.github.hitzseb.model.Chart;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class ChartExampleTest {
 
@@ -16,6 +18,11 @@ public class ChartExampleTest {
 
         System.out.println("\n" + periodChart + "\n");
         System.out.println(YahooFinanceAPI.buildTable(periodChart));
+
+        List<String> symbols = Arrays.asList("AAPL", "MSFT", "NVDA", "META", "AMZN", "GOOGL", "TSLA");
+
+        List<Chart> charts = YahooFinanceAPI.getChartsByRange(symbols, "1d", "1d");
+        System.out.println(charts);
 
     }
 

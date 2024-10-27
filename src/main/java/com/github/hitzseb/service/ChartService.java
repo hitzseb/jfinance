@@ -1,12 +1,15 @@
 package com.github.hitzseb.service;
 
 import com.github.hitzseb.model.Chart;
+import com.github.hitzseb.model.Stock;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /**
  * Service class for obtaining financial chart data.
@@ -60,6 +63,38 @@ public class ChartService {
     }
 
     /**
+     * Retrieves a list of chart data based on the provided list of symbols.
+     * This method fetches the chart data concurrently for each symbol using
+     * {@link CompletableFuture} to improve performance.
+     *
+     * @param symbols a list of stock symbols to fetch data for (e.g., "AAPL", "MSFT", "GOOGL")
+     * @param interval the interval for the chart data
+     * @param range the range for the chart data
+     * @return a list of {@link Chart} objects containing the chart data
+     * @throws IOException if an I/O exception occurs
+     * @throws InterruptedException if the operation is interrupted
+     */
+    public static List<Chart> getChartsByRange(List<String> symbols, String interval, String range) throws IOException, InterruptedException {
+        // Creates a futures list, one for each symbol
+        List<CompletableFuture<Chart>> futures = symbols.stream()
+                .map(symbol -> CompletableFuture.supplyAsync(() -> {
+                    try {
+                        return getChartByRange(symbol, interval, range);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }))
+                .collect(Collectors.toList());
+
+        // Waits for all futures to complete and collect results
+        return futures.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Retrieves chart data based on the provided symbol, interval, range and timezone.
      *
      * @param symbol the stock symbol
@@ -83,6 +118,39 @@ public class ChartService {
         HttpRequest request = buildRequest(symbol, interval, range);
 
         return RequestSender.sendChartRequest(request, format, timezone);
+    }
+
+    /**
+     * Retrieves a list of chart data based on the provided list of symbols.
+     * This method fetches the chart data concurrently for each symbol using
+     * {@link CompletableFuture} to improve performance.
+     *
+     * @param symbols a list of stock symbols to fetch data for (e.g., "AAPL", "MSFT", "GOOGL")
+     * @param interval the interval for the chart data
+     * @param range the range for the chart data
+     * @param timezone the timezone for the chart data
+     * @return a list of {@link Chart} objects containing the chart data
+     * @throws IOException if an I/O exception occurs
+     * @throws InterruptedException if the operation is interrupted
+     */
+    public static List<Chart> getChartsByRange(List<String> symbols, String interval, String range, String timezone) throws IOException, InterruptedException {
+        // Creates a futures list, one for each symbol
+        List<CompletableFuture<Chart>> futures = symbols.stream()
+                .map(symbol -> CompletableFuture.supplyAsync(() -> {
+                    try {
+                        return getChartByRange(symbol, interval, range, timezone);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }))
+                .collect(Collectors.toList());
+
+        // Waits for all futures to complete and collect results
+        return futures.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -112,6 +180,39 @@ public class ChartService {
     }
 
     /**
+     * Retrieves a list of chart data based on the provided list of symbols.
+     * This method fetches the chart data concurrently for each symbol using
+     * {@link CompletableFuture} to improve performance.
+     *
+     * @param symbols a list of stock symbols to fetch data for (e.g., "AAPL", "MSFT", "GOOGL")
+     * @param interval the interval for the chart data
+     * @param period1 the start date for the chart data
+     * @param period2 the end date for the chart data
+     * @return a list of {@link Chart} objects containing the chart data
+     * @throws IOException if an I/O exception occurs
+     * @throws InterruptedException if the operation is interrupted
+     */
+    public static List<Chart> getChartsByPeriod(List<String> symbols, String interval, String period1, String period2) throws IOException, InterruptedException {
+        // Creates a futures list, one for each symbol
+        List<CompletableFuture<Chart>> futures = symbols.stream()
+                .map(symbol -> CompletableFuture.supplyAsync(() -> {
+                    try {
+                        return getChartByPeriod(symbol, interval, period1, period2);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }))
+                .collect(Collectors.toList());
+
+        // Waits for all futures to complete and collect results
+        return futures.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Retrieves chart data based on the provided symbol, interval, specific time periods and timezone.
      *
      * @param symbol the stock symbol
@@ -136,6 +237,40 @@ public class ChartService {
         HttpRequest request = buildRequest(symbol, interval, period1Timestamp, period2Timestamp);
 
         return RequestSender.sendChartRequest(request, format, timezone);
+    }
+
+    /**
+     * Retrieves a list of chart data based on the provided list of symbols.
+     * This method fetches the chart data concurrently for each symbol using
+     * {@link CompletableFuture} to improve performance.
+     *
+     * @param symbols a list of stock symbols to fetch data for (e.g., "AAPL", "MSFT", "GOOGL")
+     * @param interval the interval for the chart data
+     * @param period1 the start date for the chart data
+     * @param period2 the end date for the chart data
+     * @param timezone the timezone for the chart data
+     * @return a list of {@link Chart} objects containing the chart data
+     * @throws IOException if an I/O exception occurs
+     * @throws InterruptedException if the operation is interrupted
+     */
+    public static List<Chart> getChartsByPeriod(List<String> symbols, String interval, String period1, String period2, String timezone) throws IOException, InterruptedException {
+        // Creates a futures list, one for each symbol
+        List<CompletableFuture<Chart>> futures = symbols.stream()
+                .map(symbol -> CompletableFuture.supplyAsync(() -> {
+                    try {
+                        return getChartByPeriod(symbol, interval, period1, period2, timezone);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }))
+                .collect(Collectors.toList());
+
+        // Waits for all futures to complete and collect results
+        return futures.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList());
     }
 
     /**

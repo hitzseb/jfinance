@@ -35,7 +35,6 @@ class ChartServiceTest {
     private static void assertChartItems(Chart chart) {
         // Asserts that chart is not null and has valid meta, timestamps and indicators
         assertNotNull(chart);
-//        assertNotNull(chart.getMeta());
         assertNotNull(chart.getTimestamp());
         assertNotNull(chart.getIndicators());
 
