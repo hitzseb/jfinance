@@ -3,16 +3,14 @@ package com.github.hitzseb;
 import com.github.hitzseb.model.Stock;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class StockExampleTest {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         // Testing single stock
-        Stock apple = YahooFinanceAPI.getStock("AAPL");
-        System.out.println(apple + "\n");
+        Stock aapl = YahooFinanceAPI.getStock("AAPL");
+        System.out.println(aapl + "\n");
 
         // Testing multiple stocks
         List<String> symbols = Arrays.asList("AAPL", "MSFT", "NVDA", "META", "AMZN", "GOOGL", "TSLA");

@@ -81,7 +81,9 @@ public class RequestSender {
      * @return a Stock object containing the scraped data, or null if the data could not be obtained
      * @throws IOException if an I/O exception occurs during the scraping process
      */ static Stock sendStockRequest(String symbol) throws IOException {
-        return StockMapper.buildStockFromJson(DataScrapper.getQuote(symbol));
+         String quoteSummary = DataScrapper.getQuote(symbol).get("quoteSummary");
+         String fundamentalsTimeseries = DataScrapper.getQuote(symbol).get("fundamentalsTimeseries");
+         return StockMapper.buildStockFromJson(quoteSummary, fundamentalsTimeseries);
     }
 
 }

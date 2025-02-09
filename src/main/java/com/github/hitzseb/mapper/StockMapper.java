@@ -21,7 +21,7 @@ public class StockMapper {
      * @return a Stock object
      * @throws IOException if an I/O exception occurs during JSON parsing
      */
-    public static Stock buildStockFromJson(String quoteJson) throws IOException {
+    public static Stock buildStockFromJson(String quoteJson, String fundamentalSeries) throws IOException {
         JsonNode bodyNode = getBodyNode(quoteJson);
         JsonNode resultNode = getResultNode(bodyNode);
         JsonNode defaultKeyStatisticsNode = getDefaultKeyStatisticsNode(resultNode);
@@ -30,7 +30,9 @@ public class StockMapper {
         JsonNode summaryProfileNode = getSummaryProfileNode(resultNode);
         JsonNode priceNode = getPriceNode(resultNode);
 
-        return mapStock(defaultKeyStatisticsNode, financialDataNode, summaryDetailNode, summaryProfileNode, priceNode);
+        double pegRatio = getPegRatio(fundamentalSeries);
+
+        return mapStock(defaultKeyStatisticsNode, financialDataNode, summaryDetailNode, summaryProfileNode, priceNode, pegRatio);
     }
 
     /**
@@ -111,6 +113,36 @@ public class StockMapper {
     }
 
     /**
+     * Extracts the peg ratio from the fundamental time series.
+     *
+     * @param fundamentalSeries the JSON node representing the result data
+     * @return the JSON node representing the default key statistics data
+     */
+    private static double getPegRatio(String fundamentalSeries) throws JsonProcessingException {
+        JsonNode rootNode = objectMapper.readTree(fundamentalSeries);
+        String bodyJson = rootNode.path("body").asText();
+        JsonNode timeseriesNode = objectMapper.readTree(bodyJson)
+                .path("timeseries")
+                .path("result");
+
+        double trailingPegRatio = 0;
+
+        for (JsonNode jsonElement : timeseriesNode) {
+            JsonNode trailingPegRatioNode = jsonElement.path("trailingPegRatio");
+
+            if (!trailingPegRatioNode.isMissingNode() && trailingPegRatioNode.isArray() && trailingPegRatioNode.size() > 1) {
+                JsonNode currentTrailingPegRatio = trailingPegRatioNode.get(1);
+                JsonNode reportedValueNode = currentTrailingPegRatio.path("reportedValue");
+
+                if (!reportedValueNode.isMissingNode()) {
+                    trailingPegRatio = reportedValueNode.path("raw").asDouble();
+                }
+            }
+        }
+        return trailingPegRatio;
+    }
+
+    /**
      * Maps the JSON nodes to a Stock object.
      *
      * @param defaultKeyStatisticsNode the JSON node representing the default key statistics part
@@ -120,7 +152,7 @@ public class StockMapper {
      * @param priceNode the JSON node representing the price part
      * @return a Stock object
      */
-    private static Stock mapStock(JsonNode defaultKeyStatisticsNode, JsonNode financialDataNode, JsonNode summaryDetailNode, JsonNode summaryProfileNode, JsonNode priceNode) {
+    private static Stock mapStock(JsonNode defaultKeyStatisticsNode, JsonNode financialDataNode, JsonNode summaryDetailNode, JsonNode summaryProfileNode, JsonNode priceNode, double pegRatio) {
         Stock stock = new Stock();
 
         /* Mapping data from defaultKeyStatisticsNode */
@@ -132,7 +164,6 @@ public class StockMapper {
         stock.setShortPercentOfFloat(defaultKeyStatisticsNode.path("shortPercentOfFloat").path("raw").asDouble());
         stock.setImpliedSharesOutstanding(defaultKeyStatisticsNode.path("impliedSharesOutstanding").path("raw").asLong());
         stock.setNetIncomeToCommon(defaultKeyStatisticsNode.path("netIncomeToCommon").path("raw").asDouble());
-        stock.setPegRatio(defaultKeyStatisticsNode.path("pegRatio").path("raw").floatValue());
         stock.setEnterpriseToRevenue(defaultKeyStatisticsNode.path("enterpriseToRevenue").path("raw").floatValue());
         stock.setEnterpriseToEbitda(defaultKeyStatisticsNode.path("enterpriseToEbitda").path("raw").floatValue());
         /* This values could be empty for non equity instruments */
@@ -160,10 +191,14 @@ public class StockMapper {
         stock.setProfitMargins(financialDataNode.path("profitMargins").path("raw").floatValue());
 
         /* Mapping data from summaryDetailNode */
+        stock.setFiftyDayAverage(summaryDetailNode.path("fiftyDayAverage").path("raw").asDouble());
+        stock.setFiftyDayAverage(summaryDetailNode.path("twoHundredDayAverage").path("raw").asDouble());
         /* This values could be empty for non equity instruments */
+        stock.setBeta(getDoubleValue(summaryDetailNode, "beta"));
         stock.setTrailingPE(getDoubleValue(summaryDetailNode, "trailingPE"));
         stock.setForwardPE(getDoubleValue(summaryDetailNode, "forwardPE"));
         stock.setDividendYield(getDoubleValue(summaryDetailNode, "dividendYield"));
+        stock.setPayoutRatio(getDoubleValue(summaryDetailNode, "payoutRatio"));
 
         /* Mapping data from summaryProfileNode */
         /* This values could be empty for non equity instruments */
@@ -181,6 +216,8 @@ public class StockMapper {
         stock.setMarketCap(priceNode.get("marketCap").path("raw").asLong());
         stock.setExchangeName(priceNode.get("exchangeName").asText());
 
+        /* Peg Ratio */
+        stock.setPegRatio(pegRatio);
         return stock;
     }
 

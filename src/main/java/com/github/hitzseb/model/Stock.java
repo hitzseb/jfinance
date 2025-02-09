@@ -12,14 +12,18 @@ public class Stock {
     private String longBusinessSummary;
     private double regularMarketPrice;
     private double regularMarketChangePercent;
+    private double fiftyDayAverage;
+    private double twoHundredDayAverage;
     private long marketCap;
     private double bookValue;
     private double priceToBook;
+    private double beta;
     private double trailingPE;
     private double forwardPE;
     private double trailingEps;
     private double forwardEps;
     private double dividendYield;
+    private double payoutRatio;
     private long sharesOutstanding;
     private long enterpriseValue;
     private long floatShares;
@@ -28,7 +32,7 @@ public class Stock {
     private double shortPercentOfFloat;
     private long impliedSharesOutstanding;
     private double netIncomeToCommon;
-    private float pegRatio;
+    private double pegRatio;
     private float enterpriseToRevenue;
     private float enterpriseToEbitda;
     private long totalCash;
@@ -95,8 +99,8 @@ public class Stock {
         return exchangeName;
     }
 
-    public void setExchangeName(String exchange) {
-        this.exchangeName = exchange;
+    public void setExchangeName(String exchangeName) {
+        this.exchangeName = exchangeName;
     }
 
     public String getCurrency() {
@@ -131,6 +135,22 @@ public class Stock {
         this.regularMarketChangePercent = regularMarketChangePercent;
     }
 
+    public double getFiftyDayAverage() {
+        return fiftyDayAverage;
+    }
+
+    public void setFiftyDayAverage(double fiftyDayAverage) {
+        this.fiftyDayAverage = fiftyDayAverage;
+    }
+
+    public double getTwoHundredDayAverage() {
+        return twoHundredDayAverage;
+    }
+
+    public void setTwoHundredDayAverage(double twoHundredDayAverage) {
+        this.twoHundredDayAverage = twoHundredDayAverage;
+    }
+
     public long getMarketCap() {
         return marketCap;
     }
@@ -153,6 +173,14 @@ public class Stock {
 
     public void setPriceToBook(double priceToBook) {
         this.priceToBook = priceToBook;
+    }
+
+    public double getBeta() {
+        return beta;
+    }
+
+    public void setBeta(double beta) {
+        this.beta = beta;
     }
 
     public double getTrailingPE() {
@@ -193,6 +221,14 @@ public class Stock {
 
     public void setDividendYield(double dividendYield) {
         this.dividendYield = dividendYield;
+    }
+
+    public double getPayoutRatio() {
+        return payoutRatio;
+    }
+
+    public void setPayoutRatio(double payoutRatio) {
+        this.payoutRatio = payoutRatio;
     }
 
     public long getSharesOutstanding() {
@@ -259,11 +295,11 @@ public class Stock {
         this.netIncomeToCommon = netIncomeToCommon;
     }
 
-    public float getPegRatio() {
+    public double getPegRatio() {
         return pegRatio;
     }
 
-    public void setPegRatio(float pegRatio) {
+    public void setPegRatio(double pegRatio) {
         this.pegRatio = pegRatio;
     }
 
@@ -424,14 +460,18 @@ public class Stock {
                 ", longBusinessSummary='" + longBusinessSummary + '\'' +
                 ", regularMarketPrice=" + regularMarketPrice +
                 ", regularMarketChangePercent=" + regularMarketChangePercent +
+                ", fiftyDayAverage=" + fiftyDayAverage +
+                ", twoHundredDayAverage=" + twoHundredDayAverage +
                 ", marketCap=" + marketCap +
                 ", bookValue=" + bookValue +
                 ", priceToBook=" + priceToBook +
+                ", beta=" + beta +
                 ", trailingPE=" + trailingPE +
                 ", forwardPE=" + forwardPE +
                 ", trailingEps=" + trailingEps +
                 ", forwardEps=" + forwardEps +
                 ", dividendYield=" + dividendYield +
+                ", payoutRatio=" + payoutRatio +
                 ", sharesOutstanding=" + sharesOutstanding +
                 ", enterpriseValue=" + enterpriseValue +
                 ", floatShares=" + floatShares +

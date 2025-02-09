@@ -1,8 +1,6 @@
 package com.github.hitzseb.service;
 
 import com.github.hitzseb.model.Chart;
-import com.github.hitzseb.model.Stock;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpRequest;

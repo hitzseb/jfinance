@@ -5,13 +5,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.hitzseb.service.DataScrapper;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class ScrapExampleTest {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static void main(String[] args) throws IOException {
-        String json = DataScrapper.getQuote("AAPL");
+        Map<String, String> jsonMap = DataScrapper.getQuote("MSFT");
+
+        if (jsonMap.containsKey("quoteSummary")) {
+            processQuoteSummary(jsonMap.get("quoteSummary"));
+        }
+
+        if (jsonMap.containsKey("fundamentalsTimeseries")) {
+            processFundamentalsTimeseries(jsonMap.get("fundamentalsTimeseries"));
+        }
+    }
+
+    private static void processQuoteSummary(String json) throws IOException {
         JsonNode rootNode = objectMapper.readTree(json);
         String bodyJson = rootNode.path("body").asText();
         JsonNode bodyNode = objectMapper.readTree(bodyJson).path("quoteSummary")
@@ -31,4 +43,29 @@ public class ScrapExampleTest {
         System.out.println("******************************\nDefault Key Statistics Node\n******************************\n" + defaultKeyStatisticsNode.toPrettyString());
     }
 
+    private static void processFundamentalsTimeseries(String json) throws IOException {
+        JsonNode rootNode = objectMapper.readTree(json);
+        String bodyJson = rootNode.path("body").asText();
+        JsonNode timeseriesNode = objectMapper.readTree(bodyJson)
+                .path("timeseries")
+                .path("result");
+
+        double trailingPegRatio = 0;
+
+        for (JsonNode jsonElement : timeseriesNode) {
+            JsonNode trailingPegRatioNode = jsonElement.path("trailingPegRatio");
+
+            if (!trailingPegRatioNode.isMissingNode() && trailingPegRatioNode.isArray() && trailingPegRatioNode.size() > 1) {
+                JsonNode currentTrailingPegRatio = trailingPegRatioNode.get(1);
+                JsonNode reportedValueNode = currentTrailingPegRatio.path("reportedValue");
+
+                if (!reportedValueNode.isMissingNode()) {
+                    trailingPegRatio = reportedValueNode.path("raw").asDouble();
+                }
+            }
+        }
+
+        System.out.println("******************************\nFundamentals Timeseries Node\n******************************\n" + timeseriesNode.toPrettyString());
+        System.out.println("******************************\nTrailing Peg Ratio\n******************************\n" + trailingPegRatio);
+    }
 }
