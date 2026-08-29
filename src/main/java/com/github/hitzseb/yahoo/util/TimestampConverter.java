@@ -1,4 +1,4 @@
-package com.github.hitzseb.service;
+package com.github.hitzseb.yahoo.util;
 
 import java.time.Instant;
 import java.time.LocalDate;

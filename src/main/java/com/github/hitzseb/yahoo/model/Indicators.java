@@ -1,4 +1,4 @@
-package com.github.hitzseb.model;
+package com.github.hitzseb.yahoo.model;
 
 import java.util.List;
 

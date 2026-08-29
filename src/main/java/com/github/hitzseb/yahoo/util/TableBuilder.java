@@ -1,7 +1,7 @@
-package com.github.hitzseb.service;
+package com.github.hitzseb.yahoo.util;
 
-import com.github.hitzseb.model.Chart;
-import com.github.hitzseb.model.Indicators;
+import com.github.hitzseb.yahoo.model.Chart;
+import com.github.hitzseb.yahoo.model.Indicators;
 
 import java.util.List;
 

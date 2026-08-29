@@ -9,36 +9,6 @@ A Java library that provides a simple interface to interact with the Yahoo Finan
 
 ### Usage examples
 
-Retrieve detailed information about a stock:
-
-```
-Stock stock = YahooFinanceAPI.getStock("AAPL");
-System.out.println(stock);
-```
-Example output:
-```
-Stock{symbol='AAPL', name='Apple Inc.', type='EQUITY', sector='Technology', industry='Consumer Electronics', exchangeName='NasdaqGS', currency='USD', longBusinessSummary='Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. The company offers iPhone, a line of smartphones; Mac, a line of personal computers; iPad, a line of multi-purpose tablets; and wearables, home, and accessories comprising AirPods, Apple TV, Apple Watch, Beats products, and HomePod. It also provides AppleCare support and cloud services; and operates various platforms, including the App Store that allow customers to discover and download applications and digital content, such as books, music, video, games, and podcasts, as well as advertising services include third-party licensing arrangements and its own advertising platforms. In addition, the company offers various subscription-based services, such as Apple Arcade, a game subscription service; Apple Fitness+, a personalized fitness service; Apple Music, which offers users a curated listening experience with on-demand radio stations; Apple News+, a subscription news and magazine service; Apple TV+, which offers exclusive original content; Apple Card, a co-branded credit card; and Apple Pay, a cashless payment service, as well as licenses its intellectual property. The company serves consumers, and small and mid-sized businesses; and the education, enterprise, and government markets. It distributes third-party applications for its products through the App Store. The company also sells its products through its retail and online stores, and direct sales force; and third-party cellular network carriers, wholesalers, retailers, and resellers. Apple Inc. was founded in 1976 and is headquartered in Cupertino, California.', regularMarketPrice=227.63, regularMarketChangePercent=-0.023968767, fiftyDayAverage=221.28876, twoHundredDayAverage=0.0, marketCap=3419480784896, bookValue=3.767, priceToBook=60.4274, beta=1.24, trailingPE=36.074486, forwardPE=27.392298, trailingEps=6.31, forwardEps=8.31, dividendYield=0.0042, payoutRatio=0.1571, sharesOutstanding=15022100480, enterpriseValue=3645256499200, floatShares=15091184209, sharesShort=135189465, shortRatio=2.74, shortPercentOfFloat=0.009, impliedSharesOutstanding=15390999552, netIncomeToCommon=9.3736001536E10, pegRatio=2.1068, enterpriseToRevenue=9.322, enterpriseToEbitda=27.07, totalCash=65171001344, totalDebt=119058997248, totalRevenue=391034994688, ebitda=134660997120, debtToEquity=209.059, revenuePerShare=25.485, returnOnAssets=0.21464000642299652, returnOnEquity=1.5741299, freeCashflow=110846001152, operatingCashflow=118254002176, earningsGrowth=-0.341, revenueGrowth=0.061, grossMargins=0.46206, ebitdaMargins=0.34437, operatingMargins=0.31171, profitMargins=0.23971}
-```
-
-Retrieve detailed information about multiple stocks concurrently:
-
-```
-List<String> symbols = Arrays.asList("AAPL", "MSFT", "NVDA", "META", "AMZN", "GOOGL", "TSLA");
-List<Stock> stocks = YahooFinanceAPI.getStocks(symbols);
-stocks.sort(Comparator.comparingLong(Stock::getMarketCap).reversed());
-stocks.forEach(stock -> System.out.println("Stock: " + stock.getSymbol() + ", Market Cap: " + stock.getMarketCap()));
-```
-Example output:
-```
-Stock: AAPL, Market Cap: 3419480784896
-Stock: NVDA, Market Cap: 3179781554176
-Stock: MSFT, Market Cap: 3046073171968
-Stock: AMZN, Market Cap: 2428462694400
-Stock: GOOGL, Market Cap: 2269191602176
-Stock: META, Market Cap: 1810350735360
-Stock: TSLA, Market Cap: 1163157962752
-```
-
 Retrieve historical price data for a stock in a specified period. The expected arguments are:
 `symbol, period1, period2` and optionally you can add a `timezone` as fourth argument.
 

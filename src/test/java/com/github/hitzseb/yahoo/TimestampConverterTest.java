@@ -1,6 +1,6 @@
-package com.github.hitzseb;
+package com.github.hitzseb.yahoo;
 
-import com.github.hitzseb.service.TimestampConverter;
+import com.github.hitzseb.yahoo.util.TimestampConverter;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
